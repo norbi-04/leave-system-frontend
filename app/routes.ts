@@ -7,7 +7,7 @@ export default [
     route("/users/new","routes/users/new.tsx"),
     route("/users/:id","routes/users/show.tsx"),
     route("/users/:id/edit","routes/users/edit.tsx"),
-
+    route("/users/:id/delete","routes/users/delete.tsx"),
 
 ] satisfies RouteConfig;
  
