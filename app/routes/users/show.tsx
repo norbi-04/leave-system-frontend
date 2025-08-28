@@ -1,3 +1,5 @@
+// GET USERS BY ID (NAME, EMAIL, DEPARTMENT, LEAVE BALANCE, ROLE)
+
 import { useLoaderData } from "react-router";
 import type { LoaderFunctionArgs } from "react-router";
 import type { User } from "../types/User";

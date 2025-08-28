@@ -1,3 +1,5 @@
+// GET ALL USERS (NAME AND EMAIL)
+
 import { useLoaderData } from "react-router";
 import type { User } from "../types/User";
 import { AUTH_TOKEN } from "./auth";
@@ -26,14 +28,18 @@ export default function UserIndex() {
             <p>Welcome to the Lists Index page!</p>
             <ul>
                 {data.map((user) => (
-                    <li key={user.id}>
-                        {user.firstName} &nbsp;
+                    <li key={user.id} style={{ marginBottom: "20px" }}>
+                        <b>Name: </b> 
+                        {user.firstName} &nbsp; 
                         {user.lastName} &nbsp;
-                        {/* {user.department.name} &nbsp; */}
+                        <br />
+
+                        <b>Email: </b>
                         {user.email} &nbsp;
-                        {/* {user.leaveBalance} &nbsp;
-                        {user.role.name} */}
-                        <a href={`/users/${user.id}`}>View Details</a>
+                        <br />
+
+                        <a href={`/users/${user.id}`}>View Details</a> &nbsp; &nbsp;
+                        <a href={`/users/${user.id}/edit`}>Edit User Details</a>
                     </li>
                 ))}
             </ul>
