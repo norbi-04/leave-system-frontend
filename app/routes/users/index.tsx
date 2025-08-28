@@ -1,7 +1,8 @@
 import { useLoaderData } from "react-router";
 import type { User } from "../types/User";
+import { AUTH_TOKEN } from "./auth";
 
-const AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6eyJlbWFpbCI6ImFkbWluQGVtYWlsLmNvbSIsInJvbGUiOnsiaWQiOjEsIm5hbWUiOiJhZG1pbiJ9LCJpZCI6MX0sImlhdCI6MTc1NTc5NTM1NiwiZXhwIjoxNzU1Nzk4OTU2fQ.MDeJlCKEUQDPvvhiy7CAzAhfUiPWJuA_YyHWl4i5e8Y"; 
+
 
 export async function loader(): Promise<User[]> {
     const response = await fetch("http://localhost:8900/api/users/", {
@@ -12,9 +13,9 @@ export async function loader(): Promise<User[]> {
     if (!response.ok) {
         throw new Error("Failed to fetch users");
     }
-    const data = await response.json();
+    const { data: users } = await response.json();
     // console.log("API response:", data);
-    return data.data; 
+    return users; 
 }
 
 export default function UserIndex() {
@@ -28,10 +29,11 @@ export default function UserIndex() {
                     <li key={user.id}>
                         {user.firstName} &nbsp;
                         {user.lastName} &nbsp;
-                        {user.department.name} &nbsp;
+                        {/* {user.department.name} &nbsp; */}
                         {user.email} &nbsp;
-                        {user.leaveBalance} &nbsp;
-                        {user.role.name}
+                        {/* {user.leaveBalance} &nbsp;
+                        {user.role.name} */}
+                        <a href={`/users/${user.id}`}>View Details</a>
                     </li>
                 ))}
             </ul>
