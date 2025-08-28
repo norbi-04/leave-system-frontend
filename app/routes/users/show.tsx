@@ -72,6 +72,10 @@ export default function UserShow() {
                         <input
                             type="submit"
                             value = "Delete User"
+                            onClick={(e => {
+                                if (!confirm("Are you sure you want to delete this user?")) 
+                                    e.preventDefault();
+                            })}
                         />
                     </p>
                 </Form>
