@@ -44,7 +44,6 @@ export default function UserIndex() {
                             <br />
 
                             <a href={`/users/${user.id}`}>View Details</a> &nbsp; &nbsp;
-                            <a href={`/users/${user.id}/edit`}>Edit User Details</a>
                         </li>
                     ))}
                 </ul>
