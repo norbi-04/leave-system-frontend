@@ -1,8 +1,9 @@
 // GET ALL USERS (NAME AND EMAIL)
 
-import { useLoaderData, useNavigate } from "react-router";
+import { Link, useLoaderData, useNavigate } from "react-router";
 import type { User } from "../types/User";
 import { AUTH_TOKEN } from "./auth";
+import UserCard from "../../components/UserCard";
 
 
 
@@ -26,27 +27,20 @@ export default function UserIndex() {
     return (
         <>
             <div>
-                <h1>Users Index</h1>
+                <h1 className="text-3xl font-bold">Users Index</h1> &nbsp; &nbsp;
                 <div>
-                    <button type="button" onClick={() => navigate('/users/new')}>Create new user</button>
+                    <button 
+                        type="button" 
+                        onClick={() => navigate('/users/new')}
+                        className="px-4 py-2 bg-white text-blue-600 rounded shadow hover:bg-blue-700 hover:text-white border-1 border-blue-600 cursor-pointer font-medium"
+                        >Create new user</button>
+                </div> &nbsp; &nbsp;
+                <p className="text-lg text-gray-700  pb-6">
+                    Welcome to the User Index page. Below is the list of users in your organisation.
+                </p>
+                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    {data.map((user) => <UserCard user={user}/>)}
                 </div>
-                <p>Welcome to the Lists Index page!</p>
-                <ul>
-                    {data.map((user) => (
-                        <li key={user.id} style={{ marginBottom: "20px" }}>
-                            <b>Name: </b> 
-                            {user.firstName} &nbsp; 
-                            {user.lastName} &nbsp;
-                            <br />
-
-                            <b>Email: </b>
-                            {user.email} &nbsp;
-                            <br />
-
-                            <a href={`/users/${user.id}`}>View Details</a> &nbsp; &nbsp;
-                        </li>
-                    ))}
-                </ul>
             </div>
         </>
     );
