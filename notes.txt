@@ -2,3 +2,4 @@ Write
 
 git status : this checks if there are outstanding commits
 npm run dev : this runs the dev environment and then you can look at local link which will bring you to the router
+

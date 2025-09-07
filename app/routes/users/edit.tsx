@@ -1,6 +1,6 @@
 // UPDATE USER DETAILS
 
-import { useLoaderData } from "react-router";
+import { useActionData, useLoaderData, useNavigate, Form } from "react-router";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import { redirect } from "react-router";
 
@@ -50,7 +50,10 @@ export async function loader({ params }: LoaderFunctionArgs) {
 export async function action ({ request, params }: ActionFunctionArgs) {
     const { id } = params;
     const formData = await request.formData();
-    
+
+    if (!formData.get("email")) {
+        return { error: "Email is required." };
+    }
 
     const updatedUser = {
         id: Number(id),
@@ -74,7 +77,7 @@ export async function action ({ request, params }: ActionFunctionArgs) {
     });
 
     if (!response.ok) {
-        throw new Error("Failed to update user");
+        return { error: "Failed to update user" };
     }
 
     return redirect(`/users/${id}`);
@@ -86,11 +89,13 @@ export default function EditUser() {
         roles: Role[];
         departments: Department[];
     };
-
+    const navigate = useNavigate();
+    const actionData = useActionData<{ error?: string }>();
+    
     return (
         <div>
             <h1>Edit User</h1>
-            <form method="post">
+            <Form method="post">
                 <label>
                     First Name:
                     <input type="text" name="firstName" defaultValue={user.firstName} />
@@ -103,7 +108,8 @@ export default function EditUser() {
                 <br />
                 <label>
                     Email:
-                    <input type="email" name="email" defaultValue={user.email} />
+                    <input type="email" name="email" defaultValue={user.email}/>
+    
                 </label>
                 <br />
                 <label>
@@ -134,7 +140,11 @@ export default function EditUser() {
                 </select>
                 <br />
                 <button type="submit">Update User</button>
-            </form>
+                <button type="button" onClick={() => navigate(`/users`)}>Cancel Changes and return</button>
+                
+                { actionData?.error && <p style={{ color: 'red' }}>{actionData.error}</p> }
+
+            </Form>
         </div>
     );
 }

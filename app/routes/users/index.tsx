@@ -1,6 +1,6 @@
 // GET ALL USERS (NAME AND EMAIL)
 
-import { useLoaderData } from "react-router";
+import { useLoaderData, useNavigate } from "react-router";
 import type { User } from "../types/User";
 import { AUTH_TOKEN } from "./auth";
 
@@ -22,27 +22,33 @@ export async function loader(): Promise<User[]> {
 
 export default function UserIndex() {
     const data = useLoaderData() as User[];
+    const navigate = useNavigate();
     return (
-        <div>
-            <h1>Users Index</h1>
-            <p>Welcome to the Lists Index page!</p>
-            <ul>
-                {data.map((user) => (
-                    <li key={user.id} style={{ marginBottom: "20px" }}>
-                        <b>Name: </b> 
-                        {user.firstName} &nbsp; 
-                        {user.lastName} &nbsp;
-                        <br />
+        <>
+            <div>
+                <h1>Users Index</h1>
+                <div>
+                    <button type="button" onClick={() => navigate('/users/new')}>Create new user</button>
+                </div>
+                <p>Welcome to the Lists Index page!</p>
+                <ul>
+                    {data.map((user) => (
+                        <li key={user.id} style={{ marginBottom: "20px" }}>
+                            <b>Name: </b> 
+                            {user.firstName} &nbsp; 
+                            {user.lastName} &nbsp;
+                            <br />
 
-                        <b>Email: </b>
-                        {user.email} &nbsp;
-                        <br />
+                            <b>Email: </b>
+                            {user.email} &nbsp;
+                            <br />
 
-                        <a href={`/users/${user.id}`}>View Details</a> &nbsp; &nbsp;
-                        <a href={`/users/${user.id}/edit`}>Edit User Details</a>
-                    </li>
-                ))}
-            </ul>
-        </div>
+                            <a href={`/users/${user.id}`}>View Details</a> &nbsp; &nbsp;
+                            <a href={`/users/${user.id}/edit`}>Edit User Details</a>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        </>
     );
 }
