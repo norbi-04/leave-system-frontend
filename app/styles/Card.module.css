@@ -1,0 +1,16 @@
+@reference "../app.css";
+
+
+.button {
+  @apply inline-block bg-blue-500 text-white text-sm font-medium rounded px-4 py-2 m-3 hover:bg-blue-600 transition;
+}
+
+.card {
+  @apply rounded-lg shadow overflow-hidden border border-gray-200 transition-shadow p-2;
+
+  
+}
+
+.card:hover {
+  @apply shadow-md bg-gray-50;
+}
