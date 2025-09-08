@@ -1,16 +1,45 @@
 @reference "../app.css";
 
 
-.button {
-  @apply inline-block bg-blue-500 text-white text-sm font-medium rounded px-4 py-2 m-3 hover:bg-blue-600 transition;
-}
-
-.card {
-  @apply rounded-lg shadow overflow-hidden border border-gray-200 transition-shadow p-2;
+/* .card {
+  @apply rounded-lg shadow overflow-hidden border border-gray-200 transition-shadow p-2 flex flex-col;
 
   
 }
 
 .card:hover {
   @apply shadow-md bg-gray-50;
+}
+
+
+
+.button {
+  @apply inline-block bg-blue-500 text-white text-sm font-medium rounded px-4 py-2 m-3 hover:bg-blue-600 transition ;
+}
+
+.h4 {
+  @apply text-lg font-semibold text-blue-600 mb-1 underline;
+} */
+
+
+.card {
+  @apply rounded-xl shadow-sm overflow-hidden border border-gray-200 
+         transition-all p-4 flex flex-col bg-white h-full;
+}
+
+.card:hover {
+  @apply shadow-md scale-[1.005];
+}
+
+.button {
+  @apply inline-block bg-blue-500 text-white text-sm font-medium 
+         rounded-lg px-5 py-2 hover:bg-blue-600 hover:shadow transition;
+}
+
+.name {
+  @apply text-xl font-bold text-gray-800 pb-1; 
+}
+
+.email {
+  @apply text-base text-gray-700 ; 
 }

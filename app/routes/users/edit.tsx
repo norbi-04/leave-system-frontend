@@ -98,7 +98,11 @@ export default function EditUser() {
             <Form method="post">
                 <label>
                     First Name:
-                    <input type="text" name="firstName" defaultValue={user.firstName} />
+                    <input type="text" name="firstName" defaultValue={user.firstName}
+                           className="w-full px-4 py-2 rounded-lg border border-gray-300 
+             focus:outline-none focus:ring-blue-500 
+             focus:border-blue-500 transition text-gray-800 
+             placeholder-gray-400 shadow-sm" />
                 </label>
                 <br />
                 <label>
