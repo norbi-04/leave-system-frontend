@@ -33,13 +33,15 @@ export default function UserIndex() {
                         type="button" 
                         onClick={() => navigate('/users/new')}
                         className="px-4 py-2 bg-white text-blue-600 rounded shadow hover:bg-blue-700 hover:text-white border-1 border-blue-600 cursor-pointer font-medium"
-                        >Create new user</button>
+                        >
+                            Create new user
+                    </button>
                 </div> &nbsp; &nbsp;
                 <p className="text-lg text-gray-700  pb-6">
                     Welcome to the User Index page. Below is the list of users in your organisation.
                 </p>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {data.map((user) => <UserCard user={user}/>)}
+                    {data.map((user) => <UserCard key={user.id} user={user}/>)}
                 </div>
             </div>
         </>

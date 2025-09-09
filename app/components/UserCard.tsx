@@ -22,7 +22,7 @@ export default function UserCard({ user }: UserCardProps) {
         </div>
 
         <div className="flex justify-end mt-auto">
-          <span className={styles.button} aria-hidden="true">
+          <span className="btn-primary" aria-hidden="true">
             View Details
           </span>
         </div>

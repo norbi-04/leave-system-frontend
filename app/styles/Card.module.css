@@ -23,17 +23,14 @@
 
 
 .card {
-  @apply rounded-xl shadow-sm overflow-hidden border border-gray-200 
+  @apply rounded-xl overflow-hidden border border-gray-200 
          transition-all p-4 flex flex-col bg-white h-full;
+          box-shadow: 0 0 25px rgba(0, 0, 0, 0.07);
 }
 
 .card:hover {
-  @apply shadow-md scale-[1.005];
-}
-
-.button {
-  @apply inline-block bg-blue-500 text-white text-sm font-medium 
-         rounded-lg px-5 py-2 hover:bg-blue-600 hover:shadow transition;
+  @apply scale-[1.005];
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
 }
 
 .name {

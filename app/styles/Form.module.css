@@ -1,0 +1,17 @@
+
+@reference "../app.css";
+
+
+.field {
+  @apply w-full px-4 py-2 rounded-lg border border-gray-300 
+         focus:outline-none focus:ring-blue-500 
+         focus:border-blue-500 transition text-gray-800 
+         placeholder-gray-400;
+         box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+}
+
+.formContainer {
+  @apply max-w-2xl mx-auto rounded-xl 
+         transition-all p-10 px-10 bg-white;
+         box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+}
