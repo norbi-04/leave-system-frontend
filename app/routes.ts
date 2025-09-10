@@ -4,6 +4,7 @@ export default [
     index("routes/home.tsx"),
 
     route("/users","routes/users/index.tsx"),
+    route("/sidebar","routes/users/sidebar.tsx"),
     route("/users/new","routes/users/new.tsx"),
     route("/users/:id","routes/users/show.tsx"),
     route("/users/:id/edit","routes/users/edit.tsx"),
