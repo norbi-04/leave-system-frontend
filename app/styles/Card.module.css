@@ -24,13 +24,13 @@
 
 .card {
   @apply rounded-xl overflow-hidden border border-gray-200 
-         transition-all p-4 flex flex-col bg-white h-full;
+         transition-all p-4 flex flex-col bg-[white] h-full;
           box-shadow: 0 0 25px rgba(0, 0, 0, 0.07);
+          
 }
 
 .card:hover {
-  @apply scale-[1.005];
-  box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
 }
 
 .name {

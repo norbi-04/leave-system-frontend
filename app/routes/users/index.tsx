@@ -4,6 +4,8 @@ import { Link, useLoaderData, useNavigate } from "react-router";
 import type { User } from "../types/User";
 import { AUTH_TOKEN } from "./auth";
 import UserCard from "../../components/UserCard";
+import Sidebar from "../../components/Sidebar";
+import { MENU_LIST } from "../../config/sidebarMenuConfig";
 
 
 
@@ -24,8 +26,16 @@ export async function loader(): Promise<User[]> {
 export default function UserIndex() {
     const data = useLoaderData() as User[];
     const navigate = useNavigate();
+
+    const profile = {
+    name: "John Doe",
+    email: "john@example.com",
+    };
+
     return (
         <>
+        <Sidebar menus={MENU_LIST} title="Leave Dashboard" profile={profile} />
+        {/* <Sidebar menus={menus} title="Leave Dashboard" profile={profile} /> */}
             <div>
                 <h1 className="text-3xl font-bold">Users Index</h1> &nbsp; &nbsp;
                 <div>

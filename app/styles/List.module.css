@@ -1,0 +1,19 @@
+@reference "../app.css";
+
+.list {
+  @apply rounded-xl overflow-hidden border border-gray-200 
+        transition-all p-4 flex flex-col bg-[white] h-full ;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.07);          
+}
+
+.list:hover {
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.15);
+}
+
+.name {
+  @apply text-xl font-bold text-gray-800 pb-1; 
+}
+
+.email {
+  @apply text-base text-gray-700 ; 
+}
