@@ -9,6 +9,7 @@ import type { Role } from "../types/Role";
 import type { Department } from "../types/Department";
 
 import { AUTH_TOKEN } from "./auth";
+import UserForm from "~/components/UserForm";
 
 
 export async function loader({ params }: LoaderFunctionArgs) {
@@ -67,7 +68,7 @@ export async function action ({ request, params }: ActionFunctionArgs) {
 
     console.log("Updating with department_id:", updatedUser.department_id);
 
-    const response = await fetch(`http://localhost:8900/api/users/`, {
+    const response = await fetch(`http://localhost:8900/api/users/${id}`, {
         method: "PATCH",
         headers: {
             "Content-Type": "application/json",
@@ -93,58 +94,14 @@ export default function EditUser() {
     const actionData = useActionData<{ error?: string }>();
     
     return (
-        <div>
-            <h1>Edit User</h1>
-            <Form method="post">
-                <label>
-                    First Name:
-                    <input type="text" name="firstName" defaultValue={user.firstName} />
-                </label>
-                <br />
-                <label>
-                    Last Name:
-                    <input type="text" name="lastName" defaultValue={user.lastName} />
-                </label>
-                <br />
-                <label>
-                    Email:
-                    <input type="email" name="email" defaultValue={user.email}/>
-    
-                </label>
-                <br />
-                <label>
-                    Leave Balance:
-                    <input type="number" name="leaveBalance" defaultValue={user.leaveBalance} />
-                </label>
-                <br />
-                <label>
-                    Role:
-                </label>
-                <select name="roleId" defaultValue={user.role?.id}>
-                    {roles.map(role => (
-                        <option key={role.id} value={role.id}>
-                            {role.name}
-                        </option>
-                    ))}
-                </select>
-                <br />
-                <label>
-                    Department:
-                </label>
-                <select name="departmentId" defaultValue={user.department?.id}>
-                    {departments.map(dept => (
-                        <option key={dept.id} value={dept.id}>
-                            {dept.name}
-                        </option>
-                    ))}
-                </select>
-                <br />
-                <button type="submit">Update User</button>
-                <button type="button" onClick={() => navigate(`/users`)}>Cancel Changes and return</button>
-                
-                { actionData?.error && <p style={{ color: 'red' }}>{actionData.error}</p> }
-
-            </Form>
-        </div>
+       <>
+            <UserForm
+                user={user}
+                roles={roles}
+                departments={departments}
+                actionData={actionData}
+                actionText="Update User"
+            />
+       </>
     );
 }

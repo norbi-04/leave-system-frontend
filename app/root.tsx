@@ -33,7 +33,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <Links />
       </head>
       <body>
-        <main className="max-w-5xl mx-auto p-6">
+        <main className="w-full min-h-screen">
           {children}
 
         </main>

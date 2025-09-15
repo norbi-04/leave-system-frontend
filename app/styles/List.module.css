@@ -1,0 +1,32 @@
+@reference "../app.css";
+
+.list {
+  @apply rounded-xl border border-gray-200 
+         transition-all p-2 flex flex-col bg-white;
+  overflow: visible;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
+}
+
+.list:hover {
+  @apply scale-[1.001];
+  background-color: #fdfeff
+}
+
+.userRow {
+  display: grid;
+  grid-template-columns: 0.27fr 1.2fr 2fr 0.3fr repeat(2, 0.5fr);
+  align-items: center;
+}
+
+.name {
+  @apply text-base font-semibold text-gray-800 pl-2;
+}
+
+.email {
+  @apply text-base text-gray-700;
+}
+
+.profileAvatar {
+  @apply w-12 h-12 rounded-full bg-[#10D1D1] flex items-center justify-center text-[#11202C] font-bold text-base;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}

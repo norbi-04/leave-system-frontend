@@ -4,6 +4,8 @@ import { Link, useLoaderData, useNavigate } from "react-router";
 import type { User } from "../types/User";
 import { AUTH_TOKEN } from "./auth";
 import UserCard from "../../components/UserCard";
+import Sidebar from "../../components/Sidebar2";
+import { MENU_LIST } from "../../config/sidebarMenuConfig";
 
 
 
@@ -24,8 +26,16 @@ export async function loader(): Promise<User[]> {
 export default function UserIndex() {
     const data = useLoaderData() as User[];
     const navigate = useNavigate();
+
+    const profile = {
+    name: "John Doe",
+    email: "john@example.com",
+    };
+
     return (
         <>
+        <Sidebar menus={MENU_LIST} title="Leave Dashboard" profile={profile} />
+        {/* <Sidebar menus={menus} title="Leave Dashboard" profile={profile} /> */}
             <div>
                 <h1 className="text-3xl font-bold">Users Index</h1> &nbsp; &nbsp;
                 <div>
@@ -33,13 +43,15 @@ export default function UserIndex() {
                         type="button" 
                         onClick={() => navigate('/users/new')}
                         className="px-4 py-2 bg-white text-blue-600 rounded shadow hover:bg-blue-700 hover:text-white border-1 border-blue-600 cursor-pointer font-medium"
-                        >Create new user</button>
+                        >
+                            Create new user
+                    </button>
                 </div> &nbsp; &nbsp;
                 <p className="text-lg text-gray-700  pb-6">
                     Welcome to the User Index page. Below is the list of users in your organisation.
                 </p>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    {data.map((user) => <UserCard user={user}/>)}
+                    {data.map((user) => <UserCard key={user.id} user={user}/>)}
                 </div>
             </div>
         </>

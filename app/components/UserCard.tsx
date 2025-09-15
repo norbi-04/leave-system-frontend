@@ -13,21 +13,22 @@ interface UserCardProps {
 export default function UserCard({ user }: UserCardProps) {
   return (
     <Link to={`/users/${user.id}`}>
-      <div style={{ marginBottom: "20px" }} className={styles.card}>
-        <b>Name: </b>
-        {user.firstName} &nbsp; {user.lastName}
-        <br />
 
-        <b>Email: </b>
-        {user.email}
-        <br />
+      <div style={{ marginBottom: "40px" }} className={styles.card}>
 
-        <div className="flex justify-end">
-          <span className={styles.button} aria-hidden="true">
+        <div>
+          <p className={styles.name}>{user.firstName} {user.lastName} &nbsp;</p>
+          <p className={styles.email}>{user.email} </p>
+        </div>
+
+        <div className="flex justify-end mt-auto">
+          <span className="btn-primary" aria-hidden="true">
             View Details
           </span>
         </div>
+
       </div>
+
     </Link>
   );
 }
