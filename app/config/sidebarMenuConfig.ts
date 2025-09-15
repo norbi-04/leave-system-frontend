@@ -10,6 +10,7 @@ interface MenuItem {
     subMenu?: SubMenuItem[];
 }
 
+// Sidebar menu example
 export const MENU_LIST: MenuItem[] = [
     {
       title: "Leave",
@@ -24,7 +25,7 @@ export const MENU_LIST: MenuItem[] = [
     { title: "Roles" },
   ];
 
-  const profile = {
+export const PROFILE = {
     name: "John Doe",
     email: "john@example.com",
   };

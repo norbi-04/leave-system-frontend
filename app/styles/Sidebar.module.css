@@ -1,25 +1,22 @@
 @reference "../app.css";
 
 
-.sidebar {
-  @apply h-screen p-5 pt-8 flex flex-col justify-between;
-  background-color: #11202C;
-  position: fixed;
-  left: 0;
-  top: 0;
+.sidebarTitle {
+  @apply font-semibold text-xl mb-6 pl-2;
+  color: #ffffff;
 }
 
-.sidebarTitle {
-  @apply font-semibold text-xl mb-6;
-  color: #ffffff; 
+.sidebar {
+  @apply h-full p-5 pt-8 flex flex-col justify-between sticky top-0;
+  background-color: #11202C;
 }
 
 .menuList {
-  @apply flex flex-col gap-1;
+  @apply flex flex-col pl-2;
 }
 
 .menuItem {
-  @apply flex flex-col rounded-md py-2 px-4 cursor-pointer transition-all;
+  @apply flex flex-col rounded-md py-3 px-4 cursor-pointer transition-all;
   background-color: #11202C;
   color: #ffffff;
 }
@@ -28,18 +25,14 @@
   background-color: #172b3b;
 }
 
-.menuHeader {
-  @apply flex items-center justify-between;
-}
-
 .chevron {
   @apply text-xs;
-  color: #EFEFEF; 
+  color: #EFEFEF;
 }
 
 .subMenuList {
   @apply pl-4 pt-2;
-  color: rgb(202, 213, 223); 
+  color: rgb(202, 213, 223);
 }
 
 .subMenuItem {
@@ -51,13 +44,12 @@
 }
 
 .profileContainer {
-  @apply flex flex-col w-full mt-auto gap-3;
+  @apply flex flex-col w-full mt-auto gap-3 pl-2;
 }
 
 .profileSection {
-  @apply flex items-center gap-4 ; 
+  @apply flex items-center gap-4;
 }
-
 
 .profileAvatar {
   @apply w-12 h-12 rounded-full bg-[#10D1D1] flex items-center justify-center text-[#11202C] font-bold text-lg;

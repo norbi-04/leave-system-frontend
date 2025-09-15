@@ -4,7 +4,7 @@ import { Link, useLoaderData, useNavigate } from "react-router";
 import type { User } from "../types/User";
 import { AUTH_TOKEN } from "./auth";
 import UserCard from "../../components/UserCard";
-import Sidebar from "../../components/Sidebar";
+import Sidebar from "../../components/Sidebar2";
 import { MENU_LIST } from "../../config/sidebarMenuConfig";
 
 

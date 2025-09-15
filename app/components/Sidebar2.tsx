@@ -28,6 +28,7 @@ export default function Sidebar({ menus, title = "Leave System", profile }: Side
   };
 
   return (
+    <div className="sticky top-0 h-screen">
       <div className={styles.sidebar}>
         <h1 className={styles.sidebarTitle}>{title}</h1>
 
@@ -82,9 +83,10 @@ export default function Sidebar({ menus, title = "Leave System", profile }: Side
                 <span className={styles.profileEmail}>{profile.email}</span>
                 </div>
             </div>
-            <button className="btn-primary">Logout</button>
+            <button className="btn-logout">Logout</button>
             </div>
         )}
         </div>
+    </div>
   );
 }
