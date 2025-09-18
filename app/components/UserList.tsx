@@ -1,13 +1,14 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import styles from "../styles/List.module.css";
 import type { UserSummary } from "~/routes/types/User";
 
 interface UserListProps {
   user: UserSummary;
   onViewDetails: (id: number) => void;
+  onEditUser: (id: number) => void;
 }
 
-export default function UserList({ user, onViewDetails }: UserListProps) {
+export default function UserList({ user, onViewDetails, onEditUser }: UserListProps) {
   return (
     <div className="listWrapper">
       <div className={styles.list}>
@@ -20,16 +21,17 @@ export default function UserList({ user, onViewDetails }: UserListProps) {
           </li>
           <li className={styles.email}>{user.email}</li>
           <li className="ml-auto">
-            {/* Pass only the ID here */}
             <button onClick={() => onViewDetails(user.id)} className="btn-trietery">
               View Details
             </button>
           </li>
           <li className="ml-auto pr-2">
-            <button className="btn-primary">Edit User</button>
+            <button className="btn-primary" onClick={() => onEditUser(user.id)}>
+              Edit User
+            </button>
           </li>
           <li className="ml-auto pr-3">
-            <button className="btn-cancel">Delete User</button>
+            <button className="text-sm btn-delete">Delete User</button>
           </li>
         </ul>
       </div>

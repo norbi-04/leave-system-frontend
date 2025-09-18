@@ -2,14 +2,14 @@
 
 .list {
   @apply rounded-xl border border-gray-200 
-         transition-all p-2 flex flex-col bg-white;
+         transition-all p-2 flex flex-col bg-gray-50 border border-gray-200;
   overflow: visible;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
 }
 
 .list:hover {
-  @apply scale-[1.001];
-  background-color: #fdfeff
+  /* @apply scale-[1.001]; */
+  background-color: #f7f7f7
 }
 
 .userRow {

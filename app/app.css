@@ -49,17 +49,22 @@ body {
 }
 
 
-.btn-delete{
-  @apply py-1.5 mt-2 text-sm  rounded transition px-4 cursor-pointer underline;
-  color: #e43636;
-  background-color:transparent;
-  min-width: 110px;  
+.btn-delete {
+  @apply py-1.5 mt-2 text-zinc-50 rounded transition px-4 cursor-pointer border-1;
+  background-color:#f03f3c;
+  min-width: 120px; 
   width: auto;
 }
 
+.btn-delete:hover {
+  @apply py-1.5 mt-2 text-zinc-50 rounded transition px-4 cursor-pointer border-1;
+  background-color:#da2a27;
+  min-width: 120px; 
+  width: auto;
+}
 .btn-cancel {
-  @apply py-1.5 mt-2 text-sm rounded transition px-4 cursor-pointer border-1;
-  color: #e72c29;
+  @apply py-1.5 mt-2 rounded transition px-4 cursor-pointer border-1;
+  color: #fd4542;
   background-color:transparent;
   border-color: #fd4542;
   min-width: 120px; 
@@ -67,19 +72,20 @@ body {
 }
 
 .btn-cancel:hover {
-  @apply py-1.5 mt-2 text-sm text-zinc-50  rounded transition px-4 cursor-pointer border-1;
-  background-color:#e72c29;
+  @apply py-1.5 mt-2 text-zinc-50  rounded transition px-4 cursor-pointer border-1;
+  background-color:#fd4542;
   border-color: #fd4542;
   min-width: 120px; 
   width: auto;
 }
 
 .btn-logout {
-  @apply w-full py-2 mt-2 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition cursor-pointer;
+  @apply w-full h-full py-2 mt-2 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition cursor-pointer;
 }
 
 .btn-new {
-  @apply py-1 m-1.5 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition cursor-pointer px-5 ml-auto;
+  @apply py-1.5  m-1.5 text-black hover:bg-[#0fbbbb] rounded transition cursor-pointer px-7 ml-auto;
+  background-color: #10D1D1; 
   min-width: 120px; 
 }
 
@@ -87,7 +93,6 @@ body {
   @apply h-full max-h-screen overflow-y-auto;
   overflow: visible;
 }
-
 
 .h1 {
   @apply font-semibold text-3xl mb-2 w-full;
@@ -101,4 +106,8 @@ body {
   /* border: 1px solid #000000;  */
   padding:5px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
+}
+
+.editFormField {
+  @apply w-full py-1.5 border border-gray-300 text-lg font-semibold text-gray-800 px-3;
 }

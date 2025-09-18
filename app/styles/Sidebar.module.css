@@ -9,6 +9,7 @@
 .sidebar {
   @apply h-full p-5 pt-8 flex flex-col justify-between sticky top-0;
   background-color: #11202C;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05); 
 }
 
 .menuList {

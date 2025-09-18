@@ -30,7 +30,7 @@ export default function Sidebar({ menus, title = "Leave System", profile }: Side
   return (
     <div className="sticky top-0 h-screen">
       <div className={styles.sidebar}>
-        <h1 className={styles.sidebarTitle}>{title}</h1>
+        <h2 className={styles.sidebarTitle}>{title}</h2>
 
         <ul className={styles.menuList}>
           {menus.map((menu, index) => (
@@ -48,7 +48,7 @@ export default function Sidebar({ menus, title = "Leave System", profile }: Side
                 <span>{menu.title}</span>
                 {menu.subMenu && (
                   <span className={styles.chevron}>
-                    {subMenus[menu.key || ""] ? "▼" : "►"}
+                    {subMenus[menu.key || ""] ? " ↓" : " →"}
                   </span>
                 )}
               </div>

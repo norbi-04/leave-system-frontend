@@ -1,4 +1,4 @@
-import Sidebar from "~/components/Sidebar2";
+import Sidebar from "~/components/Sidebar";
 import { MENU_LIST, PROFILE } from "~/config/sidebarMenuConfig";
 
 interface LayoutProps {
@@ -11,7 +11,7 @@ export default function MainLayout({ content, details }: LayoutProps) {
     <div
       className={
         details
-          ? "grid grid-cols-[17%_1fr_24%] gap-8 w-full min-h-screen"
+          ? "grid grid-cols-[17%_1fr_21%] gap-8 w-full min-h-screen"
           : "grid grid-cols-[17%_80%] gap-8 w-full min-h-screen"
       }
     >

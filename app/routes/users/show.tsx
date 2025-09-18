@@ -1,5 +1,3 @@
-// GET USERS BY ID (NAME, EMAIL, DEPARTMENT, LEAVE BALANCE, ROLE)
-
 import { useLoaderData, Form, redirect, useActionData } from "react-router";
 import type { ActionFunctionArgs, LoaderFunctionArgs } from "react-router";
 import type { User } from "../types/User";
@@ -19,7 +17,6 @@ export async function loader({ params }: LoaderFunctionArgs): Promise<User> {
         throw new Response("Failed to fetch user", { status: response.status });
     }
     const { data: users } = await response.json();
-    // console.log("API response:", data);
     return users; 
 }
 
