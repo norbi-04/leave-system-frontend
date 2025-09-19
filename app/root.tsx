@@ -7,6 +7,7 @@ import {
   ScrollRestoration,
 } from "react-router";
 
+import { AuthProvider } from "./context/AuthContext";
 import type { Route } from "./+types/root";
 import "./app.css";
 
@@ -23,29 +24,24 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
+// Only wrap children here!
 export function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en">
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <main className="w-full min-h-screen">
-          {children}
-
-        </main>
-        <ScrollRestoration />
-        <Scripts />
-      </body>
-    </html>
-  );
+  return <main className="w-full min-h-screen">{children}</main>;
 }
 
+
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <Meta />
+      <Links />
+      <AuthProvider>
+        <Outlet />
+      </AuthProvider>
+      <ScrollRestoration />
+      <Scripts />
+    </>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {

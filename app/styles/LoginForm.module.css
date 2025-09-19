@@ -1,0 +1,41 @@
+@reference "../app.css";
+
+.container {
+  @apply flex flex-col items-center justify-center min-h-[80vh];
+}
+
+.form {
+  @apply bg-zinc-50 p-10 rounded w-full max-w-1/4 border border-gray-100 space-y-6;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+}
+
+.title {
+  @apply text-2xl font-bold mb-4 text-center text-gray-800;
+}
+
+.header {
+  @apply justify-center text-white text-center text-3xl font-bold p-5;
+  background-color: #11202C;;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.05);
+}
+
+.subheader {
+  @apply text-gray-600 text-lg mb-5;
+}
+
+.label {
+  @apply font-semibold text-lg;
+}
+
+.inputGroup {
+  @apply flex flex-col space-y-2;
+}
+
+.input{
+  @apply border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-1 focus:ring-gray-400 text-lg;
+}
+
+.error {
+  @apply text-red-500  mt-1;
+}
+

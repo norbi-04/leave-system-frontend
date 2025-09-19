@@ -1,15 +1,14 @@
 @reference "../app.css";
 
-
 .sidebarTitle {
   @apply font-semibold text-xl mb-6 pl-2;
   color: #ffffff;
 }
 
 .sidebar {
-  @apply h-full p-5 pt-8 flex flex-col justify-between sticky top-0;
+  @apply h-screen p-5 pt-8 flex flex-col justify-between min-w-90;
   background-color: #11202C;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05); 
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
 }
 
 .menuList {
@@ -53,7 +52,7 @@
 }
 
 .profileAvatar {
-  @apply w-12 h-12 rounded-full bg-[#10D1D1] flex items-center justify-center text-[#11202C] font-bold text-lg;
+  @apply w-14 h-14 rounded-full bg-[#28ebd1] flex items-center justify-center text-[#11202C] font-bold text-lg;
 }
 
 .profileInfo {
@@ -61,9 +60,9 @@
 }
 
 .profileName {
-  @apply font-semibold text-lg;
+  @apply font-semibold text-lg text-white;
 }
 
 .profileEmail {
-  @apply px-1 text-sm text-gray-300;
+  @apply px-1 text-base text-gray-300;
 }

@@ -1,92 +1,71 @@
-import { useState } from "react";
 import { useNavigate } from "react-router";
-import styles from "../styles/Sidebar.module.css";
-import { MENU_LIST } from "../config/sidebarMenuConfig";
+import { useAuth } from "../context/AuthContext";
+import styles from "~/styles/Sidebar.module.css";
 
-
-interface SidebarProps {
-    menus: typeof MENU_LIST;
-    title?: string;
-    profile?: Profile;
-}
 
 interface Profile {
-    name: string;
+    firstName: string;
+    lastName: string;
     email: string;
+    role: {
+      id: number;
+    };
 }
 
-export default function Sidebar({ menus, title = "Leave System", profile }: SidebarProps) {
-  const navigate = useNavigate();
-  const [subMenus, setSubMenus] = useState<Record<string, boolean>>({});
+interface SidebarProps {
+    profile?: Profile
+}
 
-  const toggleSubMenu = (key?: string) => {
-    if (!key) return;
-    setSubMenus((prev) => ({
-      ...prev,
-      [key]: !prev[key],
-    }));
-  };
+export function Sidebar({ profile }: SidebarProps) {
+    const { logout } = useAuth();
+    const navigate = useNavigate();    
 
-  return (
-    <div className="sticky top-0 h-screen">
-      <div className={styles.sidebar}>
-        <h2 className={styles.sidebarTitle}>{title}</h2>
+    return (
+         <div className="sticky top-0 h-screen">
+            <div className={styles.sidebar}>
+                {/* Title */}
+                <h2 className={styles.sidebarTitle}>Leave Dashboard</h2>
 
-        <ul className={styles.menuList}>
-          {menus.map((menu, index) => (
-            <li key={index} className={styles.menuItem}>
-              <div
-                className={styles.menuHeader}
-                onClick={() => {
-                  if (menu.subMenu) {
-                    toggleSubMenu(menu.key);
-                  } else if (menu.link) {
-                    navigate(menu.link);
-                  }
-                }}
-              >
-                <span>{menu.title}</span>
-                {menu.subMenu && (
-                  <span className={styles.chevron}>
-                    {subMenus[menu.key || ""] ? " ↓" : " →"}
-                  </span>
-                )}
-              </div>
-
-              {/* Render submenus */}
-              {menu.subMenu && subMenus[menu.key || ""] && (
-                <ul className={styles.subMenuList}>
-                  {menu.subMenu.map((sub, subIndex) => (
-                    <li
-                      key={subIndex}
-                      className={styles.subMenuItem}
-                      onClick={() => sub.link && navigate(sub.link)}
-                    >
-                      {sub.title}
+                {/* Menu list (hardcoded) */}
+                <ul className={styles.menuList}>
+                    <li className={styles.menuItem} onClick={() => navigate("/home")}>
+                        Home
                     </li>
-                  ))}
+                    <li className={styles.menuItem} onClick={() => navigate("/")}>
+                        My Leave
+                    </li>
+                    {profile?.role.id === 1 && (
+                        <li className={styles.menuItem} onClick={() => navigate("/")}>
+                            Manage Leave Requests
+                        </li>
+                    )}
+                    <li className={styles.menuItem} onClick={() => navigate("/users")}>
+                        Users
+                    </li>
+                    <li className={styles.menuItem} onClick={() => navigate("/")}>
+                        Roles
+                    </li>
+                    <li className={styles.menuItem} onClick={() => navigate("/")}>
+                        Departments
+                    </li>
                 </ul>
-              )}
-            </li>
-          ))}
-        </ul>
 
-        {/* Bottom part: profile + logout */}
-        {profile && (
-            <div className={styles.profileContainer}>
-            <div className={styles.profileSection}>
-                <div className={styles.profileAvatar}>
-                {profile.name.charAt(0).toUpperCase()}
+                {/* Bottom profile */}
+                {profile && (
+                <div className={styles.profileContainer}>
+                    <div className={styles.profileSection}>
+                    <div className={styles.profileAvatar}>
+                        {profile.email.charAt(0).toUpperCase()}
+                    </div>
+                    <div className={styles.profileInfo}>
+                        <span className={styles.profileName}>{profile.firstName} {profile.lastName}</span>
+                        <span className={styles.profileEmail}>{profile.email}</span>
+                    </div>
+                    </div>
+                    <button className="btn-secondary" onClick={() => logout()}>Logout</button>
                 </div>
-                <div className={styles.profileInfo}>
-                <span className={styles.profileName}>{profile.name}</span>
-                <span className={styles.profileEmail}>{profile.email}</span>
-                </div>
+                )}
             </div>
-            <button className="btn-logout">Logout</button>
-            </div>
-        )}
         </div>
-    </div>
-  );
+    );
 }

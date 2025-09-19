@@ -1,32 +1,55 @@
 @reference "../app.css";
 
-.list {
-  @apply rounded-xl border border-gray-200 
-         transition-all p-2 flex flex-col bg-gray-50 border border-gray-200;
-  overflow: visible;
+.listWrapper{
+    @apply justify-center items-center mx-auto w-[90%]
+}
+
+.listRow {
+  @apply flex text-base text-gray-800 bg-zinc-50 py-2 mb-3 items-center
+         border border-gray-200 rounded p-3 pr-6;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);  
+
+}
+
+.listRow:hover {
+  @apply bg-zinc-100 transition border-gray-200;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+}
+
+.listHeader {
+  @apply flex
+         text-lg text-white  my-3 font-semibold
+         border border-gray-300 rounded py-3.5 pr-6;
+
+  background-color: #11202C;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
 }
 
-.list:hover {
-  /* @apply scale-[1.001]; */
-  background-color: #f7f7f7
+.listColumn{
+    text-align: left;
+    flex: 1 1 0;
 }
 
-.userRow {
-  display: grid;
-  grid-template-columns: 0.27fr 1.2fr 2fr 0.3fr repeat(2, 0.5fr);
-  align-items: center;
+.listColumn.avatar {
+    flex: 0.4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.name {
-  @apply text-base font-semibold text-gray-800 pl-2;
+.listColumn.name{
+    flex: 1;
 }
 
-.email {
-  @apply text-base text-gray-700;
+.listColumn.email{
+    flex: 3;
+}
+
+.listColumn.button{
+    flex: 0.5;
+    text-align: center
 }
 
 .profileAvatar {
-  @apply w-12 h-12 rounded-full bg-[#10D1D1] flex items-center justify-center text-[#11202C] font-bold text-base;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  @apply w-13 h-13 rounded-full bg-[#28ebd1] flex items-center justify-center text-[#11202C] font-bold text-sm;
 }
