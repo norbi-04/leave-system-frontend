@@ -9,36 +9,58 @@ body {
   font-size: 17px;
 }
 
+.right-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 32, 44, 0.8);
+  transition: opacity 0.3s;
+}
+
 .btn-primary {
-  @apply bg-[#28ebd1] py-2 cursor-pointer text-[#11202C] font-semibold
-        rounded hover:bg-[#1fa49e] focus:outline-none transition;
+  @apply bg-teal-400  py-2 cursor-pointer text-[#11202C] text-base font-semibold
+        rounded-md hover:bg-[#1fa49e] focus:outline-none transition;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
 }
 
 .btn-secondary {
-  @apply w-full h-full py-2 mt-2 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition cursor-pointer;
+  @apply w-full h-full py-2 mt-2 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded-md transition cursor-pointer text-base font-semibold;
 }
 
 
 .btn-delete {
-  @apply w-full py-1.5 mt-2 text-zinc-50 rounded transition border-1 ;
-  background-color:#f03f3c;
+  @apply bg-red-500 font-semibold text-base w-full py-1.5 mt-2 text-zinc-50 rounded-md transition border-1 ;
   min-width: 120px; 
   width: auto;
 }
 
 .btn-delete:hover {
-  @apply py-1.5 mt-2 text-zinc-50 rounded transition px-4 cursor-pointer border-1 ;
+  @apply py-1.5 mt-2 text-zinc-50 rounded-md transition px-4 cursor-pointer border-1 ;
   background-color:#da2a27;
   min-width: 120px; 
   width: auto;
 }
 
+.btn-cancel {
+  @apply font-semibold text-base w-full py-1.5 mt-2 text-red-500 rounded-md transition border-1 ;
+  min-width: 120px; 
+  width: auto;
+}
+
+.btn-cancel:hover {
+  @apply bg-red-500 py-1.5 mt-2 text-zinc-50 rounded-md transition px-4 cursor-pointer border-1 ;
+  min-width: 120px; 
+  width: auto;
+}
+
 .btn-details{
-  @apply py-1.5 mt-2 text-sm text-zinc-600  rounded transition px-4 cursor-pointer underline;
+  @apply py-1.5 mt-2 text-base text-zinc-600  rounded-md transition px-4 cursor-pointer underline;
   background-color:transparent;
   min-width: 110px; 
   width: auto;
+}
+
+.btn-close {
+  @apply text-2xl pb-5 text-white hover:text-teal-400  cursor-pointer transition;
 }
 
 .page-title {
@@ -47,4 +69,25 @@ body {
 
 .page-wrapper{
     @apply justify-center items-center mx-auto w-[90%]
+}
+
+.input {
+  @apply border border-gray-300 rounded-md px-4 py-2 text-lg
+         bg-white
+         focus:border-teal-500 focus:ring-0 focus:ring-teal-400 focus:outline-none
+         transition duration-100;
+}
+
+.input-password{
+   @apply border border-gray-300 rounded-md px-4 py-2 text-lg
+         bg-zinc-100
+         focus:border-teal-500 focus:ring-0 focus:ring-teal-400 focus:outline-none
+         transition duration-100;
+}
+
+.select {
+  @apply border border-gray-300 rounded-md px-4 py-3 text-lg
+         bg-white cursor-pointer
+         focus:border-teal-500 focus:ring-0 focus:outline-none
+         transition duration-100;
 }

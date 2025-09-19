@@ -6,10 +6,11 @@ npm run dev : this runs the dev environment and then you can look at local link 
 http://localhost:5173/users
 
 
-to dos
 
-- make side panel for ease of navigation
-- find css templates in tailwind
-- make a list
-- make a form
-- 
+
+TO DO 
+
+- add a field where you can select another user as reporting line manager
+- create my leave where you can create a leave request (it will go autaomatically to your assignemd reporting line manager)
+- make it so as a manager when you go to Pending Leave requests you acn see only yours reporting line which should work thourhg backend easily
+

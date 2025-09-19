@@ -42,6 +42,9 @@ export function Sidebar({ profile }: SidebarProps) {
                     <li className={styles.menuItem} onClick={() => navigate("/users")}>
                         Users
                     </li>
+                    <li className={styles.menuItem} onClick={() => navigate("/reporting")}>
+                        Reporting Line
+                    </li>
                     <li className={styles.menuItem} onClick={() => navigate("/")}>
                         Roles
                     </li>

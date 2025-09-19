@@ -1,0 +1,102 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 32, 44, 0.8);
+  transition: opacity 0.3s;
+  z-index: 1001;
+}
+
+.dialogPanel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  background: #11202C;
+  text-align: left;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+  margin: 2rem auto;
+  width: 100%;
+  max-width: 32rem;
+  z-index: 1002; 
+}
+
+.header {
+  position: relative;
+  background: #11202C;
+  padding: 1.25rem 1.25rem 1.25rem 4.75rem;
+  margin-bottom: 1.25rem;
+  padding-top: 1.25rem;
+  padding-bottom: 1rem;
+}
+
+.icon {
+  position: absolute;
+  top: 1.25rem;
+  left: 1.25rem;
+  display: flex;
+  width: 3rem;
+  height: 3rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 1.25rem;
+  font-weight: 500;
+  z-index: 1;
+}
+
+.title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.message {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #a3a3a3;
+}
+
+.actions {
+  padding: 0 1rem 1.25rem 1rem;
+  padding-top: 3.5rem;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 0.75rem;
+}
+
+.deleteBtn {
+  display: inline-flex;
+  justify-content: center;
+  border-radius: 0.375rem;
+  background: #ef4444;
+  padding: 0.5rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+  transition: background 0.2s;
+  border: none;
+  cursor: pointer;
+}
+
+.deleteBtn:hover {
+  background: #f87171;
+}
+
+.cancelBtn {
+  display: inline-flex;
+  justify-content: center;
+  border-radius: 0.375rem;
+  background: #1a2c3b;
+  color: #fafafa;
+  padding: 0.5rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.cancelBtn:hover {
+  background: #2a3b4c;
+}

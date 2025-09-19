@@ -1,0 +1,17 @@
+@reference "../app.css";
+
+.container {
+  @apply flex flex-col gap-5 mt-5; 
+}
+
+.label {
+  @apply text-base text-gray-600 mb-1.5;
+}
+
+.value {
+  @apply border-b border-gray-300 px-4 py-2 text-lg min-h-11;
+}
+
+.field {
+  @apply flex flex-col;
+}

@@ -40,7 +40,7 @@ export default function Login() {
                     <div className={styles.inputGroup}>
                         <label className={styles.label}>Email</label>
                         <input 
-                            className={styles.input} 
+                            className="input"
                             type="email" 
                             placeholder="Enter your email" 
                             value={email}
@@ -52,7 +52,7 @@ export default function Login() {
                     <div className={`${styles.inputGroup} pb-8`}>
                         <label className={styles.label}>Password</label>
                         <input 
-                            className={styles.input} 
+                            className="input"
                             type="password" 
                             placeholder="Enter your password"
                             value={password}
