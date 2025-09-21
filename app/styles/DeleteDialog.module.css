@@ -1,4 +1,4 @@
-
+@reference "tailwindcss";
 
 .backdrop {
   position: fixed;

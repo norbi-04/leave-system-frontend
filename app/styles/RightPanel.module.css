@@ -1,3 +1,4 @@
+@reference "tailwindcss";
 
 .panel {
   @apply fixed top-0 right-0 h-screen w-[500px] bg-zinc-50 shadow-lg z-50 flex flex-col transition-transform duration-300 ease-in-out translate-x-full;

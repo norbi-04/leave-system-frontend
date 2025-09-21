@@ -29,13 +29,13 @@ export default function Login() {
 
     return (
         <div>
-            <h1 className={styles.header}>Welcome!</h1>
+            <h1 className={styles.header}>Welcome to the login page!</h1>
           
             <div className={styles.container}>
         
                 <form className={styles.form} onSubmit={handleSubmit}> 
                     <h2 className={`${styles.title} pb-3`}>Login</h2>
-                    <p className={`${styles.subheader} flex justify-center pb-8`}>Please log in to continue.</p>
+                    <p className={`${styles.subheader} flex justify-center pb-8`}>Please log in to continue to the leave system.</p>
 
                     <div className={styles.inputGroup}>
                         <label className={styles.label}>Email</label>

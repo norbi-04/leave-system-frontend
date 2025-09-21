@@ -1,3 +1,4 @@
+@reference "tailwindcss";
 
 .listWrapper{
     @apply mx-auto w-[90%] min-h-screen overflow-auto;
@@ -100,7 +101,7 @@
    @apply py-2 px-4 rounded-full text-base;
 }
 .status-rejected {
-  @apply bg-red-500 text-white py-2 px-3 rounded-full text-base;
+  @apply bg-red-500 text-white py-2 px-4.5 rounded-full text-base;
 }
 
 .status-pending {

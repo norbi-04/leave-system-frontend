@@ -14,7 +14,7 @@ export default function MyLeave() {
      const isAdmin = user?.token.role.name === "admin";
 
     const [leaveBalance, setLeaveBalance] = useState<number>(0);
-    const [showCalendar, setShowCalendar] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(true);
     const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]); // <-- Add this
 
     useEffect(() => {

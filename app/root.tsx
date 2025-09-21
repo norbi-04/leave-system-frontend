@@ -6,6 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
+// import { Outlet } from "@react-router/dev"; // <-- THIS IS CORRECT
 
 import { AuthProvider } from "./context/AuthContext";
 import type { Route } from "./+types/root";
