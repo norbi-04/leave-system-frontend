@@ -7,7 +7,7 @@ export interface UserSummary {
 
 export interface User extends UserSummary {
   department: { id: number; name: string };
-  leaveBalance: number;
+  leaveBalance: number; // camelCase
   role: { id: number; name: string };
 }
 
@@ -25,7 +25,7 @@ export interface AuthUser {
       id: number;
       name: string;
     };
-    leaveBalance?: number;
+    leaveBalance?: number; // camelCase
   };
   iat?: number;
   exp?: number;

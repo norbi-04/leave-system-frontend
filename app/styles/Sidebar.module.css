@@ -1,4 +1,3 @@
-@reference "../app.css";
 
 .sidebarTitle {
   @apply font-semibold text-xl mb-6 pl-2;

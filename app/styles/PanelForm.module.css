@@ -1,4 +1,4 @@
-@reference "../app.css";
+
 
 .form {
   @apply flex flex-col  mt-4;

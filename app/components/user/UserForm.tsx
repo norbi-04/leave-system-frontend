@@ -143,7 +143,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     onChange={e =>
                         setFormData(prevFormData => ({
                             ...prevFormData,
-                            leaveBalance: Number(e.target.value)
+                            leaveBalance: Number(e.target.value) // <-- use camelCase
                         }))
                     }
                 />

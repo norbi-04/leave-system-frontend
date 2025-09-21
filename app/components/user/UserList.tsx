@@ -7,6 +7,7 @@ interface UserListProps {
     onDelete?: () => void;
     onDeleteResult?: (success: boolean) => void;
     onViewDetails?: () => void;
+    authUser?: any;
 }
 
 export default function UserList({ user: rowUser, onDelete, onViewDetails }: UserListProps) {
@@ -14,9 +15,9 @@ export default function UserList({ user: rowUser, onDelete, onViewDetails }: Use
     const isStaff = authUser?.token?.role?.name === "staff";
 
     return (
-        <div className={styles.listRow}>
+        <div className={`${styles.listRow}`}>
             <div className={`${styles.listColumn} ${styles.avatar}`}>
-                <span className={styles.profileAvatar}>{rowUser.email.charAt(0).toUpperCase()}</span>
+                <span className={styles.profileAvatar} id="profileAvatar">{rowUser.email.charAt(0).toUpperCase()}</span>
             </div>
             <div className={`${styles.listColumn} ${styles.name}`}>{rowUser.firstName} {rowUser.lastName}</div>
             <div className={`${styles.listColumn} ${styles.email}`}>{rowUser.email}</div>

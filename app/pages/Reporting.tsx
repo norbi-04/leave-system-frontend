@@ -18,8 +18,8 @@ interface ReportingLine {
   manager_id: number;
   startDate: string;
   endDate?: string;
-  user?: UserSummary;      // <-- add this line
-  manager?: UserSummary;   // <-- add this line
+  user?: UserSummary;     
+  manager?: UserSummary;   
 }
 
 export default function Reporting() {
@@ -41,17 +41,15 @@ export default function Reporting() {
   useEffect(() => {
     const loadData = async () => {
       if (!token) return;
-      // Fetch all users (for dropdowns)
+
       const users = await fetchUsers(token);
       setUsers(users);
 
-      // Fetch reporting lines
       const lines = await fetchReportingLines(token);
 
-      // Hydrate reporting lines with user and manager objects
+
       const hydratedLines = await Promise.all(
         lines.map(async (line: any) => {
-          // If already populated, skip fetch
           let userObj = line.user;
           let managerObj = line.manager;
           if (!userObj || typeof userObj === "number") {
@@ -73,7 +71,7 @@ export default function Reporting() {
     loadData();
   }, [token]);
 
-  // Filter managers (exclude staff)
+
   const managers = users.filter(u => (u as any).role?.name !== "staff");
 
   const handleSave = () => {
@@ -167,7 +165,8 @@ export default function Reporting() {
           onClose={() => setMessage(null)}
         />
       )}
-      <div className="flex h-screen w-full">
+      <div className="flex w-full min-h-screen">
+        {/* Sidebar: fixed/sticky, not flex-1 */}
         <Sidebar
           profile={
             user
@@ -180,8 +179,8 @@ export default function Reporting() {
               : undefined
           }
         />
-
-        <div className="flex-1 p-6">
+        {/* Main content: flex-1, scrollable */}
+        <div className="flex-1 p-6 overflow-auto">
           <div className={styles.listWrapper}>
             <div className="mb-25">
               <label className="page-title">Reporting Lines</label>
@@ -195,12 +194,13 @@ export default function Reporting() {
                 Create New Reporting Line
               </button>
             </div>
-            <div className={styles.listHeader}>
-              <div className={`${styles.listColumn} ${styles.email}`}>User Email</div>
-              <div className={`${styles.listColumn} ${styles.email}`}>Manager Email</div>
-              <div className={`${styles.listColumn} ${styles.button}`}>Start date</div>
-              <div className={`${styles.listColumn} ${styles.button}`}>End date</div>
-              <div className={`${styles.listColumn} ${styles.button}`}></div>
+            <div className={styles.listHeader2}>
+              <div className={`${styles.listColumn2} ${styles.email} `}>User Email</div>
+              <div className={`${styles.listColumn2} ${styles.email} pl-4`}>Manager Email</div>
+              <div className={`${styles.listColumn2} ${styles.date} pl-6`}>Start date</div>
+              <div className={`${styles.listColumn2} ${styles.date} pl-5`}>End date</div>
+              <div className={`${styles.listColumn2} ${styles.button}`}></div>
+              <div className={`${styles.listColumn2} ${styles.button}`}></div>
             </div>
             {reportingLines.map(line => {
               if (!line.user || !line.manager) return null;
@@ -253,6 +253,7 @@ export default function Reporting() {
               />
             )}
           </RightPanel>
+          <div className="mt-50">
           {deleteDialogOpen && reportingLineToDelete && (
             <DeleteDialog
               title="Delete reporting line"
@@ -263,6 +264,7 @@ export default function Reporting() {
               onDeleteResult={handleDeleteResult}
             />
           )}
+          </div>
         </div>
       </div>
     </ProtectedRoute>

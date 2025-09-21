@@ -97,7 +97,7 @@ export default function Users() {
     if (userData.firstName !== undefined) payload.firstName = userData.firstName;
     if (userData.lastName !== undefined) payload.lastName = userData.lastName;
     if (userData.email !== undefined) payload.email = userData.email;
-    if (userData.leaveBalance !== undefined) payload.leaveBalance = userData.leaveBalance;
+    if (userData.leaveBalance !== undefined) payload.leave_balance = userData.leaveBalance;
     if (userData.department?.id !== undefined) payload.department_id = userData.department.id;
     if (userData.role?.id !== undefined) payload.role_id = userData.role.id;
     if (userData.password !== undefined && userData.password !== "") payload.password = userData.password;

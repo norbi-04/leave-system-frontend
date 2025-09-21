@@ -13,6 +13,8 @@ type AuthProps = {
 
 const AuthContext = createContext<AuthProps | undefined>(undefined);
 
+export { AuthContext };
+
 export function AuthProvider({ children }: { children: React.ReactNode }) {
     const [token, setToken] = useState<string | null>(null);
     const [user, setUser] = useState<AuthUser | null>(null);
@@ -28,7 +30,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             try {
                 const decoded = jwtDecode<AuthUser>(token);
                 console.log("Decoded JWT:", decoded)
-                setUser(decoded);
+                setUser({
+                    ...decoded,
+                    token: {
+                        ...decoded.token,
+                        leaveBalance: decoded.token.leaveBalance, // <-- FIXED HERE
+                    }
+                });
             } catch {
                 setUser(null);
             }

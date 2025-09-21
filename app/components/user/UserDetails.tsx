@@ -35,7 +35,7 @@ export default function UserDetails({ user }: UserDetailsProps) {
 
       <div className={styles.field}>
         <label className={styles.label}>Leave Balance</label>
-        <span className={styles.value}>{user.leaveBalance ?? "—"}</span>
+        <span className={styles.value}>{user.leaveBalance}</span>
       </div>
     </div>
   );

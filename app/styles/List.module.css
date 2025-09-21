@@ -1,12 +1,19 @@
-@reference "../app.css";
 
 .listWrapper{
-    @apply justify-center items-center mx-auto w-[90%]
+    @apply mx-auto w-[90%] min-h-screen overflow-auto;
 }
 
 .listRow {
   @apply flex text-base text-gray-800 bg-zinc-50 py-2 mb-3 items-center
          border border-gray-200 rounded-md p-3 pr-6;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);  
+
+}
+
+
+.listRow2 {
+  @apply flex text-base text-gray-800 bg-zinc-50 py-2 mb-3 items-center
+         border border-gray-200 rounded-md p-3 pr-6 pl-14;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.03);  
 
 }
@@ -25,10 +32,20 @@
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
 }
 
+.listHeader2 {
+  @apply flex
+         text-lg text-white  my-3 font-semibold
+         border border-gray-300 rounded-md py-3.5 px-15;
+
+  background-color: #11202C;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
+}
+
 .listColumn{
     text-align: left;
-    flex: 1 1 0;
+    flex: 1 1 0; 
 }
+
 
 .listColumn.avatar {
     flex: 0.4;
@@ -50,6 +67,48 @@
     text-align: center
 }
 
+.listColumn2{
+   text-align: left;
+    flex: 1 1 0;
+}
+
+.listColumn2.email{
+   flex: 0.7;
+}
+
+.listColumn2.date{
+  flex: 0.5;
+}
+
+
+
+
+.listColumn2.button{
+    flex: 0.3;
+    text-align: center
+}
+
+
 .profileAvatar {
   @apply w-13 h-13 rounded-full bg-[#28ebd1] flex items-center justify-center text-[#11202C] font-bold text-sm;
+}
+
+
+.status-approved {
+  color: #ffffff;
+  background-color: #22c55e ;
+   @apply py-2 px-4 rounded-full text-base;
+}
+.status-rejected {
+  @apply bg-red-500 text-white py-2 px-3 rounded-full text-base;
+}
+
+.status-pending {
+  color: #ffffff;
+  background-color: #597588;
+  @apply py-2 px-5 rounded-full text-base;
+}
+
+.days{
+   flex: 0.4;
 }

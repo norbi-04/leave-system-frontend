@@ -31,11 +31,11 @@ export function Sidebar({ profile }: SidebarProps) {
                     <li className={styles.menuItem} onClick={() => navigate("/home")}>
                         Home
                     </li>
-                    <li className={styles.menuItem} onClick={() => navigate("/")}>
+                    <li className={styles.menuItem} onClick={() => navigate("/my-leave")}>
                         My Leave
                     </li>
                     {profile?.role.id === 1 && (
-                        <li className={styles.menuItem} onClick={() => navigate("/")}>
+                        <li className={styles.menuItem} onClick={() => navigate("/pending-leave")}>
                             Manage Leave Requests
                         </li>
                     )}

@@ -5,6 +5,8 @@ export default [
     route("/home","pages/Home.tsx"),
     route("/users","pages/Users.tsx"),
     route("/reporting","pages/Reporting.tsx"),
+    route("/my-leave","pages/MyLeave.tsx"),
+    route("/pending-leave","pages/PendingLeave.tsx"),
 
 ] satisfies RouteConfig;
  

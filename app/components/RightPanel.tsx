@@ -12,10 +12,15 @@ interface RightPanelProps {
     deleteAction?: () => void;
     saveAction?: () => void;
     onCancel?: () => void;
+    editTitle?: string;
+    deleteTitle?: string;
+    saveTitle?: string;
+    cancelTitle?: string;
+    disableEdit?: boolean;
 }
 
 
-export default function RightPanel({ open, onClose, title, children, editing, editAction, deleteAction, saveAction, onCancel }: RightPanelProps) {
+export default function RightPanel({ open, onClose, title, children, editing, editAction, deleteAction, saveAction, onCancel, editTitle, deleteTitle, saveTitle, cancelTitle, disableEdit }: RightPanelProps) {
     const userFormRef = useRef<HTMLFormElement>(null);
 
     const handleSave = () => {
@@ -44,10 +49,12 @@ export default function RightPanel({ open, onClose, title, children, editing, ed
 
                 {/* Footer */}
                 <div className={styles.footer}>
-                    {!editing && <button className="min-h-11.5 btn-secondary" onClick={editAction}>Edit</button>}
-                    {!editing && <button className="min-h-11.5 btn-delete"  onClick={deleteAction}>Delete</button>}
-                    {editing && <button className="min-h-11.5 btn-secondary" onClick={saveAction}>Save</button>}
-                    {editing && <button className="min-h-11.5 btn-cancel" onClick={onCancel}>Cancel</button>}
+                    {!disableEdit && !editing && (
+                        <button className="min-h-11.5 btn-secondary" onClick={editAction}>{editTitle}</button>
+                    )}
+                    {!editing && <button className="min-h-11.5 btn-delete"  onClick={deleteAction}>{deleteTitle}</button>}
+                    {editing && <button className="min-h-11.5 btn-secondary" onClick={saveAction}>{saveTitle}</button>}
+                    {editing && <button className="min-h-11.5 btn-cancel" onClick={onCancel}>{cancelTitle}</button>}
                 </div>
             </div>
         </>
