@@ -1,104 +1,107 @@
 @import "tailwindcss";
-
+@reference "tailwindcss";
 
 html,
 
 body {
-  @apply bg-white;
   color-scheme: light;
-  background-color: #EFEFEF;
+  background-color: #f1f1f1;
+  font-size: 17px;
 }
 
+.right-panel-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(17, 32, 44, 0.8);
+  transition: opacity 0.3s;
+}
 
 .btn-primary {
-  @apply py-1.5 mt-2 text-sm  text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition px-4 cursor-pointer;
+  @apply bg-teal-400  py-1.5  cursor-pointer text-[#11202C] text-base font-semibold
+        rounded-md hover:bg-[#1fa49e] focus:outline-none transition ;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
   min-width: 120px; 
-  width: auto;
 }
 
 .btn-secondary {
-  @apply py-1.5 mt-2 text-sm  rounded transition px-4 cursor-pointer border-1;
-  color: #1a2c3b;
-  border-color: #2a3b4c;
-  background-color:transparent;
+  @apply w-full h-full py-1.5 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded-md transition cursor-pointer text-base font-semibold;
+  min-height: 45px;
+}
+
+.btn-secondary-transparent {
+  @apply w-full h-full py-1.5 text-[#1a2c3b] hover:text-white border border-[#1a2c3b] bg-transparent hover:bg-[#2a3b4c] rounded-md transition cursor-pointer text-base font-semibold;
+    min-height: 45px;
+}
+
+.btn-delete {
+  @apply bg-red-500 font-semibold text-base w-full py-1.5  text-zinc-50 rounded-md transition border-1 ;
   min-width: 120px; 
   width: auto;
 }
 
-.btn-secondary:hover {
-  @apply py-1.5 mt-2 text-zinc-50 rounded transition px-4 cursor-pointer border-1;
-  background-color: #2a3b4c;
-  border-color: #2a3b4c;
+.btn-delete:hover {
+  @apply py-1.5  text-zinc-50 rounded-md transition px-4 cursor-pointer border-1 ;
+  background-color:#da2a27;
   min-width: 120px; 
-  width: auto;
-}
-
-.btn-trietery{
-  @apply py-1.5 mt-2 text-sm text-zinc-600  rounded transition px-4 cursor-pointer underline;
-  background-color:transparent;
-  min-width: 110px; 
-  width: auto;
-}
-
-.btn-edit{
-  @apply py-1.5 mt-2 text-sm  rounded transition px-4 cursor-pointer underline;
-  color: #007da3;
-  background-color:transparent;
-  min-width: 110px; 
-  width: auto;
-}
-
-
-.btn-delete{
-  @apply py-1.5 mt-2 text-sm  rounded transition px-4 cursor-pointer underline;
-  color: #e43636;
-  background-color:transparent;
-  min-width: 110px;  
   width: auto;
 }
 
 .btn-cancel {
-  @apply py-1.5 mt-2 text-sm rounded transition px-4 cursor-pointer border-1;
-  color: #e72c29;
-  background-color:transparent;
-  border-color: #fd4542;
+  @apply font-semibold text-base w-full py-1.5  text-red-500 rounded-md transition border-1 ;
   min-width: 120px; 
   width: auto;
 }
 
 .btn-cancel:hover {
-  @apply py-1.5 mt-2 text-sm text-zinc-50  rounded transition px-4 cursor-pointer border-1;
-  background-color:#e72c29;
-  border-color: #fd4542;
+  @apply bg-red-500 py-1.5 text-zinc-50 rounded-md transition px-4 cursor-pointer border-1 border-red-500; ;
   min-width: 120px; 
   width: auto;
 }
 
-.btn-logout {
-  @apply w-full py-2 mt-2 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition cursor-pointer;
+.btn-details{
+  @apply py-1.5  text-base text-zinc-600  rounded-md transition px-4 cursor-pointer underline;
+  background-color:transparent;
+  min-width: 110px; 
+  width: auto;
 }
 
-.btn-new {
-  @apply py-1 m-1.5 text-zinc-50 bg-[#1a2c3b] hover:bg-[#2a3b4c] rounded transition cursor-pointer px-5 ml-auto;
-  min-width: 120px; 
+.btn-close {
+  @apply text-2xl pb-5 text-white hover:text-teal-400  cursor-pointer transition;
 }
 
-.listWrapper {
-  @apply h-full max-h-screen overflow-y-auto;
-  overflow: visible;
-}
-
-
-.h1 {
+.page-title {
   @apply font-semibold text-3xl mb-2 w-full;
 }
 
-.tableHeader {
-  @apply grid items-center text-zinc-50  border border-gray-300;
-  grid-template-columns:  0.34fr 1.39fr 3fr 1fr;
-  background-color: #11202C;
-  padding: 0.75rem 1rem;
-  /* border: 1px solid #000000;  */
-  padding:5px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.02);
+.page-wrapper{
+    @apply justify-center items-center mx-auto w-[90%]
+}
+
+.input {
+  @apply border border-gray-300 rounded-md px-4 py-2 text-lg
+         bg-white
+         focus:border-teal-500 focus:ring-0 focus:ring-teal-400 focus:outline-none
+         transition duration-100;
+}
+
+.input-password{
+   @apply border border-gray-300 rounded-md px-4 py-2 text-lg
+         bg-zinc-100
+         focus:border-teal-500 focus:ring-0 focus:ring-teal-400 focus:outline-none
+         transition duration-100;
+}
+
+.select {
+  @apply border border-gray-300 rounded-md px-4 py-3 text-lg
+         bg-white cursor-pointer
+         focus:border-teal-500 focus:ring-0 focus:outline-none
+         transition duration-100;
+}
+
+.label {
+  @apply text-base text-gray-600 mb-1.5;
+}
+
+.heading {
+    @apply font-semibold text-xl mb-2 w-full;
 }
