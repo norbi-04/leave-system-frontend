@@ -28,28 +28,22 @@ export function Sidebar({ profile }: SidebarProps) {
 
                 {/* Menu list (hardcoded) */}
                 <ul className={styles.menuList}>
-                    <li className={styles.menuItem} onClick={() => navigate("/home")}>
-                        Home
+                    <li className={styles.menuItem}>
+                        <button className="cursor-pointer" type="button" onClick={() => navigate("/home")}>Home</button>
                     </li>
-                    <li className={styles.menuItem} onClick={() => navigate("/my-leave")}>
-                        My Leave
+                    <li className={styles.menuItem}>
+                        <button className="cursor-pointer" type="button" onClick={() => navigate("/my-leave")}>My Leave</button>
                     </li>
-                    {profile?.role.id === 1 && (
-                        <li className={styles.menuItem} onClick={() => navigate("/pending-leave")}>
-                            Manage Leave Requests
+                    {profile?.role.id !== 3 && (
+                        <li className={styles.menuItem}>
+                            <button className="cursor-pointer" type="button" onClick={() => navigate("/pending-leave")}>Manage Leave Requests</button>
                         </li>
                     )}
-                    <li className={styles.menuItem} onClick={() => navigate("/users")}>
-                        Users
+                    <li className={styles.menuItem}>
+                        <button className="cursor-pointer"  type="button" onClick={() => navigate("/users")}>Users</button>
                     </li>
-                    <li className={styles.menuItem} onClick={() => navigate("/reporting")}>
-                        Reporting Line
-                    </li>
-                    <li className={styles.menuItem} onClick={() => navigate("/")}>
-                        Roles
-                    </li>
-                    <li className={styles.menuItem} onClick={() => navigate("/")}>
-                        Departments
+                    <li className={styles.menuItem}>
+                        <button className="cursor-pointer" type="button" onClick={() => navigate("/reporting")}>Reporting Line</button>
                     </li>
                 </ul>
 

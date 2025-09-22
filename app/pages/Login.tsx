@@ -15,8 +15,11 @@ export default function Login() {
         e.preventDefault();
         setError(null);
 
+        
+        const cleanEmail = sanitizeEmail(email);
+
         try {
-            const { accessToken } = await loginApi(email, password);
+            const { accessToken } = await loginApi(cleanEmail, password);
             login(accessToken);
             console.log("Login successful");
             navigate("/home");
@@ -26,6 +29,10 @@ export default function Login() {
             setError("Invalid email or password");
         }
     };
+
+    function sanitizeEmail(email: string) {
+        return email.trim().replace(/[<>"'`;]/g, "");
+    }
 
     return (
         <div>

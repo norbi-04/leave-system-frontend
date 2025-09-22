@@ -9,16 +9,25 @@
   @apply h-screen p-5 pt-8 flex flex-col justify-between min-w-90;
   background-color: #11202C;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+  text-align: left;
 }
 
 .menuList {
   @apply flex flex-col pl-2;
+    text-align: left;
 }
 
 .menuItem {
   @apply flex flex-col rounded-md py-3 px-4 cursor-pointer transition-all;
   background-color: #11202C;
   color: #ffffff;
+  text-align: left;
+}
+
+.menuItem button {
+  text-align: left;
+  width: 100%; 
+  justify-content: flex-start; 
 }
 
 .menuItem:hover {

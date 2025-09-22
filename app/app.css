@@ -53,7 +53,7 @@ body {
 }
 
 .btn-cancel:hover {
-  @apply bg-red-500 py-1.5 text-zinc-50 rounded-md transition px-4 cursor-pointer border-1 ;
+  @apply bg-red-500 py-1.5 text-zinc-50 rounded-md transition px-4 cursor-pointer border-1 border-red-500; ;
   min-width: 120px; 
   width: auto;
 }
@@ -102,3 +102,6 @@ body {
   @apply text-base text-gray-600 mb-1.5;
 }
 
+.heading {
+    @apply font-semibold text-xl mb-2 w-full;
+}

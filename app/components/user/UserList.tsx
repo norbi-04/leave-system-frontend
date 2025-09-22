@@ -12,7 +12,7 @@ interface UserListProps {
 
 export default function UserList({ user: rowUser, onDelete, onViewDetails }: UserListProps) {
     const { user: authUser } = useAuth();
-    const isStaff = authUser?.token?.role?.name === "staff";
+    const isAdmin = authUser?.token?.role?.name === "admin";
 
     return (
         <div className={`${styles.listRow}`}>
@@ -21,7 +21,7 @@ export default function UserList({ user: rowUser, onDelete, onViewDetails }: Use
             </div>
             <div className={`${styles.listColumn} ${styles.name}`}>{rowUser.firstName} {rowUser.lastName}</div>
             <div className={`${styles.listColumn} ${styles.email}`}>{rowUser.email}</div>
-            { !isStaff ? (
+            { isAdmin ? (
                 <>
                     <div className={`${styles.listColumn} ${styles.button}`}>
                         <button className="btn-details" onClick={onViewDetails}>View Details</button>

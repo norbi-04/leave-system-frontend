@@ -1,8 +1,9 @@
-export const createLeaveRequest = async (startDate: Date, endDate: Date, token: string, userId?: string) => {
+export const createLeaveRequest = async (startDate: Date, endDate: Date, token: string, userId?: string, managerId?: number) => {
     const body: any = {
         startDate: startDate,
         endDate: endDate,
-        user_id: userId
+        user_id: userId,
+        manager_id: managerId
     };
     const res = await fetch(`http://localhost:8900/api/leave-requests/`, {
         method: "POST",

@@ -18,7 +18,7 @@ import DeleteDialog from "../components/DeleteDialog";
 
 export default function Users() {
   const { user, token } = useAuth();
-  const isStaff = user?.token.role.name === "staff";
+  const isAdmin = user?.token.role.name === "admin";
 
   const [users, setUsers] = useState<UserSummary[]>([]);
   const [roles, setRoles] = useState<Role[]>([]);
@@ -144,10 +144,11 @@ export default function Users() {
           onClose={() => setMessage(null)}
         />
       )}
-      <div className="flex h-screen w-full">
-        <Sidebar
+      <div className="flex w-full min-h-screen">
+        <div className="sticky top-0 h-screen">
+          <Sidebar
             profile={
-                user
+              user
                 ? {
                     firstName: (user.token.firstName ?? ""),
                     lastName: (user.token.lastName ?? ""),
@@ -156,18 +157,18 @@ export default function Users() {
                   }
                 : undefined
             }
-        />
-
+          />
+        </div>
         <div className="flex-1 p-6">
           <div className={styles.listWrapper}>
-                <div className="mb-25">
+                <div className="mb-0">
                     <label className="page-title">User index</label>
                     <hr className="border-gray-300 my-1" />
                     <p className="text-gray-700 mb-10 mt-3">
                         Welcome to the User index page. Below is the list of users in your organisation.
                     </p>
                 </div>
-                {!isStaff ? (
+                {isAdmin ? (
                   <div className="flex justify-end w-full mb-1">
                     <button className="btn-primary px-15" onClick={handleCreateUser}>
                       Create New User
@@ -205,6 +206,10 @@ export default function Users() {
               onClose={() => setRightPanelOpen(false)}
               title={creating ? "Create New User" : "User Details"}
               editing={editing}
+              editTitle="Edit User"
+              deleteTitle="Delete User"
+              saveTitle="Save User"
+              cancelTitle="Cancel Changes"
               editAction={() => setEditing(true)}
               deleteAction={() => {
                 if (selectedUser) {

@@ -12,6 +12,7 @@ import type { LeaveRequest } from "~/types/LeaveRequestType";
 export default function MyLeave() {
     const { user, token } = useAuth();
      const isAdmin = user?.token.role.name === "admin";
+    const isManager = user?.token.role.name === "manager";
 
     const [leaveBalance, setLeaveBalance] = useState<number>(0);
     const [showCalendar, setShowCalendar] = useState(false);
@@ -58,17 +59,17 @@ export default function MyLeave() {
                 />
                 <div className="flex-1 p-6" >
                     <div className={styles.listWrapper}>
-                        <div className="mb-0">
-                            <label className="page-title">My leave</label>
+                        <div className="pb-9">
+                            <label className="page-title">Manage staff leave requests</label>
                             <hr className="border-gray-300 my-1" />
                             <p className="text-gray-700 mb-4 mt-3">
-                                Welcome to the My leave page. This is where you can view and manage your leave requests.
+                                Welcome to the Manage staff leave requests page. This is where you can view and manage leave requests.
                             </p>
                         </div>
 
                         <div className="mt-10">
                             <div className={`${styles.listHeader} mt-pt-6 pl-13`}>
-                                {isAdmin && <div className={`${styles.listColumn2} ${styles.date}`}>User Email</div>}
+                                {(isAdmin || isManager) && <div className={`${styles.listColumn2} ${styles.date}`}>User Email</div>}
                                 <div className={`${styles.listColumn2} ${styles.date}`}>Start Date</div>
                                 <div className={`${styles.listColumn2} ${styles.date}`}>End Date</div>
                                 <div className={`${styles.days}`}>Days</div>

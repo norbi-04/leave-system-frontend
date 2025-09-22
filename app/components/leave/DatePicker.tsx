@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { Day, DayPicker } from "react-day-picker";
 import styles from '~/styles/DatePicker.module.css';
-import { addMonths, differenceInCalendarDays, parseISO } from "date-fns";
+import { addMonths, differenceInCalendarDays, parseISO, format } from "date-fns";
 import { createLeaveRequest } from "~/api/leave";
 import { fetchUserById } from "~/api/user";
+import { fetchReportingLines } from "~/api/reporting";
 import MessageDialog from "~/components/MessageDialog"; 
 import { useAuth } from "~/context/AuthContext";
 import type { LeaveRequest } from "~/types/LeaveRequestType";
@@ -14,9 +15,10 @@ import type { LeaveRequest } from "~/types/LeaveRequestType";
 interface DatePickerProps {
     leaveRequests: LeaveRequest[];
     leaveBalance: number;
+    onLeaveRequestCreated?: () => void;
 }
 
-export default function DatePicker({ leaveRequests, leaveBalance }: DatePickerProps) {
+export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequestCreated }: DatePickerProps) {
     const { user, token } = useAuth();
     const [startDate, setStartDate] = useState<Date | undefined>(undefined);
     const [endDate, setEndDate] = useState<Date | undefined>(undefined);
@@ -28,6 +30,7 @@ export default function DatePicker({ leaveRequests, leaveBalance }: DatePickerPr
             : 0;
 
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+    const [reportingLines, setReportingLines] = useState<any[]>([]);
 
     // Prepare modifiers
     const approvedRanges = leaveRequests
@@ -56,14 +59,28 @@ export default function DatePicker({ leaveRequests, leaveBalance }: DatePickerPr
 
     const handleRequestLeave = () => {
         if (startDate && endDate) {
-            createLeaveRequest(startDate, endDate, String(token))
+            // Find the reporting line for the current user
+            const myReportingLine = reportingLines.find(
+                (line) =>
+                    line.user &&
+                    Number(line.user.id) === Number(user?.token.id) &&
+                    line.manager &&
+                    typeof line.manager.id !== "undefined"
+            );
+            const managerId = myReportingLine ? Number(myReportingLine.manager.id) : undefined;
+            const userId = user?.token.id ? String(user.token.id) : undefined;
+
+            console.log("Reporting lines:", reportingLines);
+            console.log("Current user id:", user?.token.id);
+            console.log("Found reporting line:", myReportingLine);
+            console.log("Manager ID to send:", managerId);
+
+            createLeaveRequest(startDate, endDate, String(token), userId, managerId)
                 .then(() => {
                     setMessage({ type: "success", text: 'Leave request created successfully!' });
-                    setStartDate(undefined); // <-- Reset selection
-                    setEndDate(undefined);   // <-- Reset selection
-                    // refresh the page to show the new leave request
-                    window.location.reload();
-
+                    setStartDate(undefined);
+                    setEndDate(undefined);
+                    if (onLeaveRequestCreated) onLeaveRequestCreated();
                 })
                 .catch((error) => {
                     console.error('Error creating leave request:', error);
@@ -76,18 +93,53 @@ export default function DatePicker({ leaveRequests, leaveBalance }: DatePickerPr
     const disabledDates: Date[] = [];
     leaveRequests.forEach(req => {
         if (req.status === "Approved" || req.status === "Pending") {
-            const from = parseISO(req.startDate);
-            const to = parseISO(req.endDate);
+            const from = toDateOnly(req.startDate);
+            const to = toDateOnly(req.endDate);
             for (
                 let d = new Date(from);
                 d <= to;
-                d.setDate(d.getDate() + 1)
+                d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
             ) {
                 // Push a new Date instance to avoid reference issues
                 disabledDates.push(new Date(d));
             }
         }
     });
+
+    function isRangeOverlapping(rangeFrom: Date, rangeTo: Date, disabledDates: Date[]) {
+        for (
+            let d = new Date(rangeFrom);
+            d <= rangeTo;
+            d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
+        ) {
+            if (disabledDates.some(disabled =>
+                disabled.getFullYear() === d.getFullYear() &&
+                disabled.getMonth() === d.getMonth() &&
+                disabled.getDate() === d.getDate()
+            )) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // When creating a Date from a string, always use only the date part:
+    function toDateOnly(dateString: string) {
+      // Parse as ISO, then create a new Date at midnight local time
+      const d = parseISO(dateString);
+      return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+    }
+
+    const startDateString = startDate ? format(startDate, "yyyy-MM-dd") : "";
+    const endDateString = endDate ? format(endDate, "yyyy-MM-dd") : "";
+
+    useEffect(() => {
+        if (!token) return;
+        fetchReportingLines(token).then(data => {
+            console.log("Fetched reporting lines:", data);
+            setReportingLines(data);
+        });
+    }, [token]);
 
     return (
         <div className="flex flex-row min-h-[660px] shadow-sm border-gray-200 bg-zinc-50">
@@ -98,7 +150,13 @@ export default function DatePicker({ leaveRequests, leaveBalance }: DatePickerPr
                     mode="range"
                     selected={startDate && endDate ? { from: startDate, to: endDate } : undefined}
                     onSelect={(range) => {
-                        if (range) {
+                        if (range && range.from && range.to) {
+                            if (isRangeOverlapping(range.from, range.to, disabledDates)) {
+                                setMessage({ type: "error", text: "Selected range overlaps with existing leave (pending or approved)." });
+                                setStartDate(undefined);
+                                setEndDate(undefined);
+                                return;
+                            }
                             setStartDate(range.from);
                             setEndDate(range.to);
                         } else {
@@ -206,13 +264,14 @@ export default function DatePicker({ leaveRequests, leaveBalance }: DatePickerPr
                         <div className="mt-auto flex flex-col space-y-2 pt-4">
                             {startDate && endDate && (
                                 <div className="bg-white-50 mb-5">
+                                    <label className="label pl-3">
+                                      Date format: DD/MM/YYYY
+                                    </label>
                                     <p className="text-left text-teal-700 font-semibold text-base rounded px-3 py-1">
-                                        Selected Start Date: {startDate.toLocaleDateString()}  <br />  Selected End Date: {endDate.toLocaleDateString()}
+                                      Selected Start Date: {startDate.toLocaleDateString("en-GB")} <br />
+                                      Selected End Date: {endDate.toLocaleDateString("en-GB")}
                                     </p>
-                                    <p className="text-left text-teal-700 font-semibold text-base rounded px-3 py-1" >
-                                       
-                                    </p>
-                                </div>
+                                  </div>
                             )}
                             <button className="btn-primary w-full justify-end " onClick={handleRequestLeave}>Request Selected Leave</button>
                         </div>

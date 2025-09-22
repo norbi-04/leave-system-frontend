@@ -24,6 +24,7 @@ interface ReportingLine {
 
 export default function Reporting() {
   const { user, token } = useAuth();
+  const isAdmin = user?.token.role.name === "admin";
 
   const [users, setUsers] = useState<UserSummary[]>([]);
   const [reportingLines, setReportingLines] = useState<ReportingLine[]>([]);
@@ -91,7 +92,7 @@ export default function Reporting() {
           data.user_id,
           data.manager_id,
           data.startDate,
-          data.endDate ?? null // <-- fix: convert undefined to null
+          data.endDate ?? null 
         );
         setMessage({ type: "success", text: "Reporting line updated." });
       }
@@ -119,7 +120,6 @@ export default function Reporting() {
     setRightPanelOpen(true);
   };
 
-  // Removed handleViewDetails and handleEdit for details panel
 
   const handleEdit = (line: ReportingLine) => {
     setSelectedReportingLine(line);
@@ -182,18 +182,20 @@ export default function Reporting() {
         {/* Main content: flex-1, scrollable */}
         <div className="flex-1 p-6 overflow-auto">
           <div className={styles.listWrapper}>
-            <div className="mb-25">
+            <div className="mb-0">
               <label className="page-title">Reporting Lines</label>
               <hr className="border-gray-300 my-1" />
               <p className="text-gray-700 mb-10 mt-3">
                 Below is the list of reporting lines in your organisation.
               </p>
             </div>
+            {isAdmin && (
             <div className="flex justify-end w-full mb-1">
               <button className="btn-primary px-15" onClick={handleCreate}>
                 Create New Reporting Line
               </button>
             </div>
+            )}
             <div className={styles.listHeader2}>
               <div className={`${styles.listColumn2} ${styles.email} `}>User Email</div>
               <div className={`${styles.listColumn2} ${styles.email} pl-4`}>Manager Email</div>
@@ -223,13 +225,14 @@ export default function Reporting() {
           <RightPanel
             open={rightPanelOpen}
             onClose={() => setRightPanelOpen(false)}
+            saveTitle="Save Changes"
+            cancelTitle="Cancel Changes"
             title={
               creating
                 ? "Create Reporting Line"
                 : "Edit Reporting Line"
             }
             editing={true}
-            // No editAction or deleteAction needed for details
             saveAction={handleSave}
             onCancel={() => {
               setEditing(false);
