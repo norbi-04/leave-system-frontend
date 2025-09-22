@@ -37,8 +37,8 @@ export const fetchReportingLines = async (token: string) => {
     if (!res.ok) {
         throw new Error("Failed to fetch reporting lines");
     }
-    const { data: reportingLines } = await res.json(); // <-- fix: extract data property
-    return reportingLines; // <-- return the array
+    const { data: reportingLines } = await res.json();
+    return reportingLines; 
 };
 
 export const deleteReportingLine = async (token: string, id: number) => {

@@ -32,7 +32,7 @@ export const fetchLeaveRequests = async (token: string) => {
         throw new Error("Failed to fetch leave balance");
     }
     const json = await res.json();
-    return json.data; // <-- Return only the data property!
+    return json.data; 
 };
 
 

@@ -6,7 +6,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "react-router";
-// import { Outlet } from "@react-router/dev"; // <-- THIS IS CORRECT
+// import { Outlet } from "@react-router/dev"; 
 
 import { AuthProvider } from "./context/AuthContext";
 import type { Route } from "./+types/root";
@@ -25,7 +25,7 @@ export const links: Route.LinksFunction = () => [
   },
 ];
 
-// Only wrap children here!
+
 export function Layout({ children }: { children: React.ReactNode }) {
   return <main className="w-full min-h-screen">{children}</main>;
 }

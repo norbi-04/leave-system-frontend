@@ -22,7 +22,6 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
     ({ user, roles, departments, onSubmit }, ref) => {
         const [formData, setFormData] = useState<UserFormData>(user);
 
-        // Add this effect to update formData when user prop changes
         useEffect(() => {
             setFormData(user);
         }, [user]);
@@ -143,7 +142,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     onChange={e =>
                         setFormData(prevFormData => ({
                             ...prevFormData,
-                            leaveBalance: Number(e.target.value) // <-- use camelCase
+                            leaveBalance: Number(e.target.value) 
                         }))
                     }
                 />

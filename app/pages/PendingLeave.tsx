@@ -4,8 +4,8 @@ import ProtectedRoute from "~/components/ProtectedPage";
 import { Sidebar } from "~/components/Sidebar";
 import { useAuth } from "~/context/AuthContext";
 import { fetchUserById } from "~/api/user";
-import { fetchLeaveRequests } from "~/api/leave"; // <-- Import this
-import LeaveRequestList from "~/components/leave/LeaveRequestList"; // <-- Import this
+import { fetchLeaveRequests } from "~/api/leave"; 
+import LeaveRequestList from "~/components/leave/LeaveRequestList"; 
 import styles from '~/styles/List.module.css';
 import type { LeaveRequest } from "~/types/LeaveRequestType";
 
@@ -16,8 +16,7 @@ export default function MyLeave() {
 
     const [leaveBalance, setLeaveBalance] = useState<number>(0);
     const [showCalendar, setShowCalendar] = useState(false);
-    const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]); // <-- Add this
-
+    const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]); 
     useEffect(() => {
         if (user?.token?.id && token) {
             fetchUserById(user.token.id, token)
@@ -30,7 +29,6 @@ export default function MyLeave() {
         if (token) {
             fetchLeaveRequests(token)
                 .then(data => {
-                    // data is now either an array or a single object
                     const requests: LeaveRequest[] = Array.isArray(data)
                         ? data
                         : data

@@ -32,7 +32,6 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
     const [reportingLines, setReportingLines] = useState<any[]>([]);
 
-    // Prepare modifiers
     const approvedRanges = leaveRequests
         .filter(req => req.status === "Approved")
         .map(req => ({
@@ -53,13 +52,13 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
     };
 
     const modifiersClassNames = {
-        approved: styles["rdp-approved"], // You'll define this in your CSS
-        pending: styles["rdp-pending"]    // You'll define this in your CSS
+        approved: styles["rdp-approved"],
+        pending: styles["rdp-pending"]    
     };
 
     const handleRequestLeave = () => {
         if (startDate && endDate) {
-            // Find the reporting line for the current user
+        
             const myReportingLine = reportingLines.find(
                 (line) =>
                     line.user &&
@@ -89,7 +88,6 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
         }
     }
 
-    // Collect all dates that are pending or approved
     const disabledDates: Date[] = [];
     leaveRequests.forEach(req => {
         if (req.status === "Approved" || req.status === "Pending") {
@@ -100,7 +98,6 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
                 d <= to;
                 d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
             ) {
-                // Push a new Date instance to avoid reference issues
                 disabledDates.push(new Date(d));
             }
         }
@@ -123,9 +120,8 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
         return false;
     }
 
-    // When creating a Date from a string, always use only the date part:
+
     function toDateOnly(dateString: string) {
-      // Parse as ISO, then create a new Date at midnight local time
       const d = parseISO(dateString);
       return new Date(d.getFullYear(), d.getMonth(), d.getDate());
     }
