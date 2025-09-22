@@ -34,7 +34,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     ...decoded,
                     token: {
                         ...decoded.token,
-                        leaveBalance: decoded.token.leaveBalance, // <-- FIXED HERE
+                        leaveBalance: decoded.token.leaveBalance,
                     }
                 });
             } catch {

@@ -20,7 +20,7 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
     const isAdmin = user?.token.role.name === "admin";
     const isManager = user?.token.role.name === "manager";
 
-    // Map of userId to User details
+
     const [userDetails, setUserDetails] = useState<Record<number, User>>({});
     const [managerDetails, setManagerDetails] = useState<Record<number, User>>({});
     const [rightPanelOpen, setRightPanelOpen] = useState(false);
@@ -38,9 +38,7 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
     const [showRejectError, setShowRejectError] = useState(false);
 
     useEffect(() => {
-        // Get unique user IDs from requests
         const uniqueUserIds = Array.from(new Set(requests.map(r => r.user.id)));
-        // Only fetch if not already in state
         uniqueUserIds.forEach(id => {
             if (typeof id === "number" && !userDetails[id] && token) {
                 fetchUserById(id, token).then(u => {
@@ -48,7 +46,6 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
                 });
             }
         });
-        // eslint-disable-next-line
     }, [requests, token]);
 
     useEffect(() => {
@@ -56,21 +53,18 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
         fetchReportingLines(token).then(setReportingLines);
     }, [token]);
 
-    // Approve handler: open dialog
     const handleApprove = (requestId: number) => {
         setApproveTargetId(requestId);
         setApproveDialogOpen(true);
     };
 
-    // Called after ApproveDialog confirms
+
     const doApprove = async () => {
         if (approveTargetId && token) {
             try {
                 await approveLeaveRequest(approveTargetId, String(token));
                 setApproveDialogOpen(false);
                 setShowApproveSuccess(true);
-                // Optionally refetch data here instead of reload
-                // if (onLeaveRequestCreated) onLeaveRequestCreated();
             } catch (error) {
                 setApproveDialogOpen(false);
                 setMessage({ type: "error", text: "Failed to approve leave request." });
@@ -79,14 +73,12 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
         return true;
     };
 
-    // Reject handler
     const handleReject = (requestId: number) => {
         setSelectedRequestId(requestId);
         setRightPanelOpen(true);
-        setRejectReason(""); // reset reason
+        setRejectReason(""); 
     };
 
-    // Called when rejecting in the panel
     const doReject = async () => {
         if (!rejectReason.trim()) {
             setShowRejectError(true);
@@ -108,7 +100,6 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
                     else if (req.status === "Rejected") statusClass = styles["status-rejected"];
                     else statusClass = styles["status-pending"];
 
-                    // Get user email if loaded
                     const userId = req.user.id ?? 0;
                     const email = userDetails[userId]?.email;
 
@@ -128,7 +119,6 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
                                 </span>
                             </div>
                             <div className={`${styles.listColumn2} ${styles.button}`}>
-                                {/* Show "View Reason" button if rejected and has a reason */}
                                 {req.status === "Rejected" && req.reason && (
                                     <button
                                         className="btn-details"
@@ -157,7 +147,6 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
                     );
                 })}
 
-            {/* ApproveDialog step */}
             <ApproveDialog
                 open={approveDialogOpen}
                 onClose={() => setApproveDialogOpen(false)}
@@ -166,7 +155,7 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
                 approveAction={doApprove}
             />
 
-            {/* Success message after approval */}
+            {/* Success message  */}
             {showApproveSuccess && (
                 <MessageDialog
                     type="success"
@@ -175,7 +164,6 @@ export default function LeaveRequestList({ requests, type }: LeaveRequestListPro
                 />
             )}
 
-            {/* Reject RightPanel */}
             <RightPanel
                 open={rightPanelOpen}
                 onClose={() => setRightPanelOpen(false)}

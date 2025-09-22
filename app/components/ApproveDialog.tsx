@@ -1,5 +1,5 @@
 import { Dialog, DialogBackdrop, DialogPanel, DialogTitle } from '@headlessui/react'
-import styles from '~/styles/DeleteDialog.module.css' // You may want to create ApproveDialog.module.css for green styling
+import styles from '~/styles/DeleteDialog.module.css' 
 
 interface ApproveDialogProps {
     title: string;
