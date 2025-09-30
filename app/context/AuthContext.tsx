@@ -3,28 +3,32 @@ import { jwtDecode } from "jwt-decode";
 import type { AuthUser } from "~/types/UserType";
 import { useNavigate } from "react-router";
 
-
+// Auth context type definition
 type AuthProps = {
-    token: string | null;
-    user: AuthUser | null;
-    login: (token: string) => void;
-    logout: () => void;
+    token: string | null; // JWT token or null if not authenticated
+    user: AuthUser | null; // Decoded user object or null
+    login: (token: string) => void; // Function to log in and set token
+    logout: () => void; // Function to log out and clear token/user
 }
 
+// Create the AuthContext
 const AuthContext = createContext<AuthProps | undefined>(undefined);
 
 export { AuthContext };
 
+// AuthProvider component to wrap the app and provide auth state
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-    const [token, setToken] = useState<string | null>(null);
-    const [user, setUser] = useState<AuthUser | null>(null);
+    const [token, setToken] = useState<string | null>(null); // Store JWT token
+    const [user, setUser] = useState<AuthUser | null>(null); // Store decoded user
     const navigate = useNavigate();
 
+    // On mount, load token from localStorage (if present)
     useEffect(() => {
         const storedToken = typeof window !== "undefined" ? localStorage.getItem("token") : null;
         setToken(storedToken);
     }, []);
 
+    // When token changes, decode it and set user
     useEffect(() => {
         if (token) {
             try {
@@ -43,6 +47,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     }, [token]);
 
+    // Login function: set token and save to localStorage
     const login = (jwt: string) => {
         setToken(jwt);
         if (typeof window !== "undefined") {
@@ -50,6 +55,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
     };
 
+    // Logout function: clear token/user and redirect to login
     const logout = () => {
         setToken(null);
         setUser(null);
@@ -66,6 +72,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     );
 }
 
+// Custom hook to use the AuthContext
 export function useAuth() {
     const context = useContext(AuthContext);
     if (!context) {

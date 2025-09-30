@@ -11,7 +11,6 @@ import type { LeaveRequest } from "~/types/LeaveRequestType";
 
 // https://daypicker.dev/docs/selection-modes
 
-
 interface DatePickerProps {
     leaveRequests: LeaveRequest[];
     leaveBalance: number;
@@ -24,14 +23,19 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
     const [endDate, setEndDate] = useState<Date | undefined>(undefined);
     const today = new Date();
     const [month, setMonth] = useState<Date>(today);
+
+    // calculating number of selected days
     const daysSelected =
         startDate && endDate
             ? differenceInCalendarDays(endDate, startDate) + 1
             : 0;
 
+    // success/error messages state
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+    // reporting lines state
     const [reportingLines, setReportingLines] = useState<any[]>([]);
 
+    // approved leave date ranges
     const approvedRanges = leaveRequests
         .filter(req => req.status === "Approved")
         .map(req => ({
@@ -39,6 +43,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
             to: parseISO(req.endDate)
         }));
 
+    // pending leave date ranges
     const pendingRanges = leaveRequests
         .filter(req => req.status === "Pending")
         .map(req => ({
@@ -46,6 +51,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
             to: parseISO(req.endDate)
         }));
 
+    // calendar styling
     const modifiers = {
         approved: approvedRanges,
         pending: pendingRanges
@@ -56,9 +62,10 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
         pending: styles["rdp-pending"]    
     };
 
+    // leave request submission
     const handleRequestLeave = () => {
         if (startDate && endDate) {
-        
+            // user's reporting line (manager)
             const myReportingLine = reportingLines.find(
                 (line) =>
                     line.user &&
@@ -69,11 +76,13 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
             const managerId = myReportingLine ? Number(myReportingLine.manager.id) : undefined;
             const userId = user?.token.id ? String(user.token.id) : undefined;
 
-            console.log("Reporting lines:", reportingLines);
-            console.log("Current user id:", user?.token.id);
-            console.log("Found reporting line:", myReportingLine);
-            console.log("Manager ID to send:", managerId);
+            // debug logs
+            // console.log("Reporting lines:", reportingLines);
+            // console.log("Current user id:", user?.token.id);
+            // console.log("Found reporting line:", myReportingLine);
+            // console.log("Manager ID to send:", managerId);
 
+            // create leave request
             createLeaveRequest(startDate, endDate, String(token), userId, managerId)
                 .then(() => {
                     setMessage({ type: "success", text: 'Leave request created successfully!' });
@@ -88,38 +97,38 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
         }
     }
 
+    // disabled dates for selection (approved or pending)
     const disabledDates: Date[] = [];
     leaveRequests.forEach(req => {
         if (req.status === "Approved" || req.status === "Pending") {
             const from = toDateOnly(req.startDate);
             const to = toDateOnly(req.endDate);
             for (
-                let d = new Date(from);
-                d <= to;
-                d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
+                let date = new Date(from);
+                date <= to;
+                date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
             ) {
-                disabledDates.push(new Date(d));
+                disabledDates.push(new Date(date));
             }
         }
     });
 
     function isRangeOverlapping(rangeFrom: Date, rangeTo: Date, disabledDates: Date[]) {
         for (
-            let d = new Date(rangeFrom);
-            d <= rangeTo;
-            d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1)
+            let date = new Date(rangeFrom);
+            date <= rangeTo;
+            date = new Date(date.getFullYear(), date.getMonth(), date.getDate() + 1)
         ) {
             if (disabledDates.some(disabled =>
-                disabled.getFullYear() === d.getFullYear() &&
-                disabled.getMonth() === d.getMonth() &&
-                disabled.getDate() === d.getDate()
+                disabled.getFullYear() === date.getFullYear() &&
+                disabled.getMonth() === date.getMonth() &&
+                disabled.getDate() === date.getDate()
             )) {
                 return true;
             }
         }
         return false;
     }
-
 
     function toDateOnly(dateString: string) {
       const d = parseISO(dateString);
@@ -147,6 +156,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
                     selected={startDate && endDate ? { from: startDate, to: endDate } : undefined}
                     onSelect={(range) => {
                         if (range && range.from && range.to) {
+                            // Prevent selecting overlapping leave
                             if (isRangeOverlapping(range.from, range.to, disabledDates)) {
                                 setMessage({ type: "error", text: "Selected range overlaps with existing leave (pending or approved)." });
                                 setStartDate(undefined);
@@ -274,6 +284,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
                     )}
                 </div>
             </div>
+            {/* message dialog */}
             {message && (
                 <MessageDialog
                     type={message.type}

@@ -12,43 +12,54 @@ import ReportingForm from "../components/reporting/ReportingForm";
 import ReportingList from "../components/reporting/ReportingList";
 import { fetchReportingLines, createReportingLine, updateReportingLine, deleteReportingLine } from "../api/reporting";
 
+// Reporting line type for this page
 interface ReportingLine {
   id?: number;
   user_id: number;
   manager_id: number;
   startDate: string;
   endDate?: string;
-  user?: UserSummary;     
-  manager?: UserSummary;   
+  user?: UserSummary;     // Hydrated user object
+  manager?: UserSummary;  // Hydrated manager object
 }
 
 export default function Reporting() {
   const { user, token } = useAuth();
   const isAdmin = user?.token.role.name === "admin";
 
+  // List of all users
   const [users, setUsers] = useState<UserSummary[]>([]);
+  // List of all reporting lines
   const [reportingLines, setReportingLines] = useState<ReportingLine[]>([]);
+  // State for showing success/error messages
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
+  // State for right panel (create/edit)
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [selectedReportingLine, setSelectedReportingLine] = useState<ReportingLine | null>(null);
+  // State for delete dialog
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [reportingLineToDelete, setReportingLineToDelete] = useState<ReportingLine | null>(null);
+  // State for create mode
   const [creating, setCreating] = useState(false);
 
+  // Ref for ReportingForm to trigger submit from parent
   const reportingFormRef = useRef<any>(null);
 
+  // Fetch users and reporting lines on mount or when token changes
   useEffect(() => {
     const loadData = async () => {
       if (!token) return;
 
+      // Fetch all users
       const users = await fetchUsers(token);
       setUsers(users);
 
+      // Fetch all reporting lines
       const lines = await fetchReportingLines(token);
 
-
+      // Hydrate reporting lines with user/manager objects
       const hydratedLines = await Promise.all(
         lines.map(async (line: any) => {
           let userObj = line.user;
@@ -72,20 +83,24 @@ export default function Reporting() {
     loadData();
   }, [token]);
 
-
+  // Filter users to get managers (not staff)
   const managers = users.filter(u => (u as any).role?.name !== "staff");
 
+  // Handle save button in right panel (calls form submit)
   const handleSave = () => {
     reportingFormRef.current?.submitForm();
   };
 
+  // Handle form submit for create or update
   const handleFormSubmit = async (data: { user_id: number; manager_id: number; startDate: string; endDate?: string }) => {
     if (!token) return;
     try {
       if (creating) {
+        // Create new reporting line
         await createReportingLine(token, data.user_id, data.manager_id, data.startDate, data.endDate);
         setMessage({ type: "success", text: "Reporting line created." });
       } else if (selectedReportingLine && selectedReportingLine.id) {
+        // Update existing reporting line
         await updateReportingLine(
           token,
           selectedReportingLine.id,
@@ -101,6 +116,7 @@ export default function Reporting() {
       setSelectedReportingLine(null);
       setCreating(false);
 
+      // Refresh reporting lines
       const lines = await fetchReportingLines(token);
       setReportingLines(lines);
     } catch (error) {
@@ -108,6 +124,7 @@ export default function Reporting() {
     }
   };
 
+  // Open right panel for creating a new reporting line
   const handleCreate = () => {
     setSelectedReportingLine({
       user_id: "" as any,
@@ -120,7 +137,7 @@ export default function Reporting() {
     setRightPanelOpen(true);
   };
 
-
+  // Open right panel for editing a reporting line
   const handleEdit = (line: ReportingLine) => {
     setSelectedReportingLine(line);
     setEditing(true);
@@ -128,6 +145,7 @@ export default function Reporting() {
     setRightPanelOpen(true);
   };
 
+  // Handle delete action for a reporting line
   const handleDelete = async (): Promise<boolean> => {
     if (!reportingLineToDelete || !token) return false;
     try {
@@ -135,6 +153,7 @@ export default function Reporting() {
       setDeleteDialogOpen(false);
       setRightPanelOpen(false);
       setMessage({ type: "success", text: "Reporting line deleted." });
+      // Refresh reporting lines
       const lines = await fetchReportingLines(token);
       setReportingLines(lines);
       return true;
@@ -144,6 +163,7 @@ export default function Reporting() {
     }
   };
 
+  // Handle result of delete dialog
   const handleDeleteResult = async (success: boolean) => {
     if (success) {
       setMessage({ type: "success", text: "Reporting line deleted." });
@@ -158,6 +178,7 @@ export default function Reporting() {
 
   return (
     <ProtectedRoute>
+      {/* Show message dialog if needed */}
       {message && (
         <MessageDialog
           type={message.type}
@@ -183,12 +204,14 @@ export default function Reporting() {
         <div className="flex-1 p-6 overflow-auto">
           <div className={styles.listWrapper}>
             <div className="mb-0">
+              {/* Page title and description */}
               <label className="page-title">Reporting Lines</label>
               <hr className="border-gray-300 my-1" />
               <p className="text-gray-700 mb-10 mt-3">
                 Below is the list of reporting lines in your organisation.
               </p>
             </div>
+            {/* Show create button for admins */}
             {isAdmin && (
             <div className="flex justify-end w-full mb-1">
               <button className="btn-primary px-15" onClick={handleCreate}>
@@ -196,6 +219,7 @@ export default function Reporting() {
               </button>
             </div>
             )}
+            {/* List header */}
             <div className={styles.listHeader2}>
               <div className={`${styles.listColumn2} ${styles.email} `}>User Email</div>
               <div className={`${styles.listColumn2} ${styles.email} pl-4`}>Manager Email</div>
@@ -204,6 +228,7 @@ export default function Reporting() {
               <div className={`${styles.listColumn2} ${styles.button}`}></div>
               <div className={`${styles.listColumn2} ${styles.button}`}></div>
             </div>
+            {/* List of reporting lines */}
             {reportingLines.map(line => {
               if (!line.user || !line.manager) return null;
               return (
@@ -222,6 +247,7 @@ export default function Reporting() {
               );
             })}
           </div>
+          {/* Right panel for create/edit reporting line */}
           <RightPanel
             open={rightPanelOpen}
             onClose={() => setRightPanelOpen(false)}
@@ -256,6 +282,7 @@ export default function Reporting() {
               />
             )}
           </RightPanel>
+          {/* Delete dialog for reporting line */}
           <div className="mt-50">
           {deleteDialogOpen && reportingLineToDelete && (
             <DeleteDialog
