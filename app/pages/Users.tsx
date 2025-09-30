@@ -20,20 +20,32 @@ export default function Users() {
   const { user, token } = useAuth();
   const isAdmin = user?.token.role.name === "admin";
 
+  // State for all users
   const [users, setUsers] = useState<UserSummary[]>([]);
+  // State for all roles
   const [roles, setRoles] = useState<Role[]>([]);
+  // State for all departments
   const [departments, setDepartments] = useState<Department[]>([]);
 
+  // State for showing success/error messages
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  // State for the currently selected user (for details/edit)
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  // State for right panel (details/edit/create)
   const [rightPanelOpen, setRightPanelOpen] = useState(false);
+  // State for editing mode
   const [editing, setEditing] = useState(false);
+  // State for delete dialog
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+  // State for user to delete
   const [userToDelete, setUserToDelete] = useState<UserSummary | null>(null);
+  // State for create mode
   const [creating, setCreating] = useState(false);
 
+  // Ref for UserForm to trigger submit from parent
   const userFormRef = useRef<any>(null);
 
+  // Fetch roles, departments, and users on mount or when token changes
   useEffect(() => {
     if (token) {
       fetchRoles(token).then(roles => setRoles(roles));
@@ -48,6 +60,7 @@ export default function Users() {
     }
   }, [token]);
 
+  // Handle viewing user details
   const handleViewDetails = async (user: UserSummary) => {
     if (token && user.id !== undefined) {
       const userDetails = await fetchUserById(user.id, String(token));
@@ -57,6 +70,7 @@ export default function Users() {
     }
   };
 
+  // Handle deleting a user
   const handleDeleteUser = async (): Promise<boolean> => {
     if (!userToDelete || !token) return false;
     try {
@@ -73,6 +87,7 @@ export default function Users() {
     }
   };
 
+  // Handle result of delete dialog
   const handleUserDeleted = async (success: boolean) => {
     if (success) {
       setMessage({ type: "success", text: `User account has been deleted.` });
@@ -85,13 +100,16 @@ export default function Users() {
     }
   };
 
+  // Handle save button in right panel (calls form submit)
   const handleSave = () => {
     userFormRef.current?.submitForm();
   };
 
+  // Handle form submit for create or update
   const handleFormSubmit = async (userData: Partial<User> & { password?: string }) => {
     if (!token) return;
 
+    // Prepare payload for API
     const payload: any = {};
 
     if (userData.firstName !== undefined) payload.firstName = userData.firstName;
@@ -104,9 +122,11 @@ export default function Users() {
 
     try {
       if (creating) {
+        // Create new user
         await createUser(payload, token);
         setMessage({ type: "success", text: "User successfully created." });
       } else if (selectedUser && selectedUser.id) {
+        // Update existing user
         await updateUser(selectedUser.id, payload, token);
         setMessage({ type: "success", text: "User details successfully updated." });
       }
@@ -114,6 +134,7 @@ export default function Users() {
       setRightPanelOpen(false);
       setCreating(false);
 
+      // Refresh users list
       const users = await fetchUsers(token);
       setUsers(users);
     } catch (error) {
@@ -121,6 +142,7 @@ export default function Users() {
     }
   };
 
+  // Open right panel for creating a new user
   const handleCreateUser = () => {
     setSelectedUser({
       firstName: "",
@@ -137,6 +159,7 @@ export default function Users() {
 
   return (
     <ProtectedRoute>
+      {/* Show message dialog if needed */}
       {message && (
         <MessageDialog
           type={message.type}
@@ -146,6 +169,7 @@ export default function Users() {
       )}
       <div className="flex w-full min-h-screen">
         <div className="sticky top-0 h-screen">
+          {/* Sidebar with user profile info */}
           <Sidebar
             profile={
               user
@@ -162,12 +186,14 @@ export default function Users() {
         <div className="flex-1 p-6">
           <div className={styles.listWrapper}>
                 <div className="mb-0">
+                    {/* Page title and description */}
                     <label className="page-title">User index</label>
                     <hr className="border-gray-300 my-1" />
                     <p className="text-gray-700 mb-10 mt-3">
                         Welcome to the User index page. Below is the list of users in your organisation.
                     </p>
                 </div>
+                {/* Show create button for admins, hidden for others */}
                 {isAdmin ? (
                   <div className="flex justify-end w-full mb-1">
                     <button className="btn-primary px-15" onClick={handleCreateUser}>
@@ -181,6 +207,7 @@ export default function Users() {
                     </button>
                   </div>
                 )}
+                {/* List header */}
                 <div className={styles.listHeader}>
                     <div className={`${styles.listColumn} ${styles.avatar}`}></div>
                     <div className={`${styles.listColumn} ${styles.name} pl-3`}>Name</div>
@@ -188,6 +215,7 @@ export default function Users() {
                     <div className={`${styles.listColumn} ${styles.button}`}></div>
                     <div className={`${styles.listColumn} ${styles.button}`}> </div>
                 </div>
+                  {/* List of users */}
                   {users.map(user => (
                     <UserList
                       key={user.id}
@@ -201,6 +229,7 @@ export default function Users() {
                     />
                   ))}
             </div>
+            {/* Right panel for create/edit/view user */}
             <RightPanel
               open={rightPanelOpen}
               onClose={() => setRightPanelOpen(false)}
@@ -225,6 +254,7 @@ export default function Users() {
                 setSelectedUser(null);
               }}
             >
+              {/* Show form if editing, otherwise show details */}
               {editing && selectedUser ? (
                 <UserForm
                   ref={userFormRef}
@@ -238,6 +268,7 @@ export default function Users() {
               )}
             </RightPanel>
     
+          {/* Delete dialog for user */}
           {deleteDialogOpen && userToDelete && (
             <DeleteDialog
               title="Delete account"

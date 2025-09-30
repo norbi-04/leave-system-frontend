@@ -3,12 +3,13 @@ import styles from '~/styles/PanelForm.module.css';
 import type { UserSummary } from "~/types/UserType";
 
 interface ReportingFormProps {
-    users: UserSummary[];
-    managers: UserSummary[];
-    onSubmit: (data: { user_id: number; manager_id: number; startDate: string; endDate?: string }) => void;
-    initial?: { user_id?: number; manager_id?: number; startDate?: string; endDate?: string };
+    users: UserSummary[]; // List of users to select from
+    managers: UserSummary[]; // List of managers to select from
+    onSubmit: (data: { user_id: number; manager_id: number; startDate: string; endDate?: string }) => void; // Callback when form is submitted
+    initial?: { user_id?: number; manager_id?: number; startDate?: string; endDate?: string }; // Optional initial values
 }
 
+// Expose imperative methods for parent components
 export interface ReportingFormHandle {
     resetForm: () => void;
     submitForm: () => void;
@@ -16,6 +17,7 @@ export interface ReportingFormHandle {
 
 const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
     ({ users, managers, onSubmit, initial }, ref) => {
+        // State to hold form data
         const [formData, setFormData] = useState({
             user_id: initial?.user_id ?? "",
             manager_id: initial?.manager_id ?? "",
@@ -23,6 +25,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
             endDate: initial?.endDate ?? ""
         });
 
+        // Update form data if initial values change
         useEffect(() => {
             setFormData({
                 user_id: initial?.user_id ?? "",
@@ -32,6 +35,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
             });
         }, [initial]);
 
+        // Expose reset and submit methods to parent via ref
         useImperativeHandle(ref, () => ({
             resetForm() {
                 setFormData({
@@ -57,6 +61,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
             <form className={styles.form}
                 onSubmit={e => {
                     e.preventDefault();
+                    // Only submit if required fields are filled
                     if (formData.user_id && formData.manager_id && formData.startDate) {
                         onSubmit({
                             user_id: Number(formData.user_id),
@@ -67,6 +72,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
                     }
                 }}
             >
+                {/* User selection */}
                 <label className={styles.label}>User</label>
                 <select
                     required
@@ -82,6 +88,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
                     ))}
                 </select>
 
+                {/* Manager selection */}
                 <label className={styles.label}>Manager</label>
                 <select
                     required
@@ -97,6 +104,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
                     ))}
                 </select>
 
+                {/* Start date input */}
                 <label className={styles.label}>Start Date</label>
                 <input
                     required
@@ -106,6 +114,7 @@ const ReportingForm = forwardRef<ReportingFormHandle, ReportingFormProps>(
                     onChange={e => setFormData(f => ({ ...f, startDate: e.target.value }))}
                 />
 
+                {/* End date input (optional) */}
                 <label className={styles.label}>End Date (optional)</label>
                 <input
                     className="mb-5 input"

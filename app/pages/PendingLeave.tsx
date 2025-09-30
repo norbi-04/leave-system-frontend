@@ -11,12 +11,18 @@ import type { LeaveRequest } from "~/types/LeaveRequestType";
 
 export default function MyLeave() {
     const { user, token } = useAuth();
-     const isAdmin = user?.token.role.name === "admin";
+    // Check if the current user is admin or manager
+    const isAdmin = user?.token.role.name === "admin";
     const isManager = user?.token.role.name === "manager";
 
+    // State for user's leave balance
     const [leaveBalance, setLeaveBalance] = useState<number>(0);
+    // State to control showing the calendar (not used here)
     const [showCalendar, setShowCalendar] = useState(false);
+    // State for all leave requests
     const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]); 
+
+    // Fetch user's leave balance on mount or when user/token changes
     useEffect(() => {
         if (user?.token?.id && token) {
             fetchUserById(user.token.id, token)
@@ -25,6 +31,7 @@ export default function MyLeave() {
         }
     }, [user, token]);
 
+    // Fetch all leave requests on mount or when token changes
     useEffect(() => {
         if (token) {
             fetchLeaveRequests(token)
@@ -43,6 +50,7 @@ export default function MyLeave() {
     return (
         <ProtectedRoute>
             <div className="flex w-full min-h-screen">
+                {/* Sidebar with user profile info */}
                 <Sidebar
                     profile={
                         user
@@ -58,6 +66,7 @@ export default function MyLeave() {
                 <div className="flex-1 p-6" >
                     <div className={styles.listWrapper}>
                         <div className="pb-9">
+                            {/* Page title and welcome message */}
                             <label className="page-title">Manage staff leave requests</label>
                             <hr className="border-gray-300 my-1" />
                             <p className="text-gray-700 mb-4 mt-3">
@@ -66,6 +75,7 @@ export default function MyLeave() {
                         </div>
 
                         <div className="mt-10">
+                            {/* Leave requests list header */}
                             <div className={`${styles.listHeader} mt-pt-6 pl-13`}>
                                 {(isAdmin || isManager) && <div className={`${styles.listColumn2} ${styles.date}`}>User Email</div>}
                                 <div className={`${styles.listColumn2} ${styles.date}`}>Start Date</div>
@@ -76,6 +86,7 @@ export default function MyLeave() {
                                 <div className={`${styles.listColumn2} ${styles.button}`}></div>
                                 <div className={`${styles.listColumn2} ${styles.button}`}></div>
                             </div>
+                            {/* List of all leave requests */}
                             <LeaveRequestList requests={leaveRequests} type="all" /> 
                         </div>
                     </div>

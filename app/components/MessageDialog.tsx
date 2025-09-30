@@ -1,13 +1,14 @@
 import { useEffect } from "react";
 
 type MessageDialogProps = {
-    type: string;
-    message: string;
-    onClose: () => void;
+    type: string; // Type of message: 'success' or 'error'
+    message: string; // The message text to display
+    onClose: () => void; // Function to call when dialog closes
 };
 
 export default function MessageDialog({ type, message, onClose }: MessageDialogProps) {
 
+    // Automatically close the dialog after 3 seconds
     useEffect(() => {
         const timer = setTimeout(onClose, 3000);
         return () => clearTimeout(timer);

@@ -11,16 +11,21 @@ import type { LeaveRequest } from "~/types/LeaveRequestType";
 
 export default function MyLeave() {
     const { user, token } = useAuth();
-     const isAdmin = user?.token.role.name === "admin";
+    // Check if the current user is an admin
+    const isAdmin = user?.token.role.name === "admin";
 
+    // State for user's leave balance
     const [leaveBalance, setLeaveBalance] = useState<number>(0);
+    // State for user's leave requests
     const [leaveRequests, setLeaveRequests] = useState<LeaveRequest[]>([]); 
 
+    // Refetch leave requests after a new request is created
     const refetch = async () => {
         const data = await fetchLeaveRequests(String(token));
         setLeaveRequests(data);
     };
 
+    // Fetch user's leave balance on mount or when user/token changes
     useEffect(() => {
         if (user?.token?.id && token) {
             fetchUserById(user.token.id, token)
@@ -29,6 +34,7 @@ export default function MyLeave() {
         }
     }, [user, token]);
 
+    // Fetch user's leave requests on mount or when token changes
     useEffect(() => {
         if (token) {
             fetchLeaveRequests(token)
@@ -47,6 +53,7 @@ export default function MyLeave() {
     return (
         <ProtectedRoute>
             <div className="flex w-full min-h-screen">
+                {/* Sidebar with user profile info */}
                 <Sidebar
                     profile={
                         user
@@ -62,6 +69,7 @@ export default function MyLeave() {
                 <div className="flex-1 p-6" >
                     <div className={styles.listWrapper}>
                         <div className="pb-3">
+                            {/* Page title and welcome message */}
                             <label className="page-title">My leave</label>
                             <hr className="border-gray-300 my-1" />
                             <p className="text-gray-700 mb-4 mt-3">
@@ -71,6 +79,7 @@ export default function MyLeave() {
                         
                         <div className="flex flex-row w-full gap-10 mt-4">
                             <div className="w-full">
+                                {/* Leave request calendar */}
                                 <h1 className="heading">Your Calendar</h1>
                                 <p className="text-gray-700 texxt-sm mb-4 mt-3">
                                     Select a date range to request leave. Dates already booked or pending approval can't be selected.
@@ -79,13 +88,14 @@ export default function MyLeave() {
                             </div>
                         </div>
                  
-                        
                         <div className="mt-10">
+                            {/* Leave requests list */}
                             <h1 className="heading">Your leave requests</h1>
-                                <p className="text-gray-700 texxt-sm mb-4 mt-3">
-                                    Below is a list of your leave requests. You can see the status of each request.
-                                </p>
+                            <p className="text-gray-700 texxt-sm mb-4 mt-3">
+                                Below is a list of your leave requests. You can see the status of each request.
+                            </p>
                             <div className={`${styles.listHeader} mt-pt-6 pl-13`}>
+                                {/* Show user email column if admin */}
                                 {isAdmin && <div className={`${styles.listColumn2} ${styles.date}`}>User Email</div>}
                                 <div className={`${styles.listColumn2} ${styles.date}`}>Start Date</div>
                                 <div className={`${styles.listColumn2} ${styles.date}`}>End Date</div>
