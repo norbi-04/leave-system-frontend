@@ -4,13 +4,12 @@ import ProtectedRoute from "~/components/ProtectedPage";
 
 export default function Home() {
   const { user } = useAuth();
-  // Check if the current user is staff
   const isStaff = user?.token.role.name === "staff";
 
   return (
     <ProtectedRoute>
       <div className="flex h-screen w-full">
-        {/* Sidebar with user profile info */}
+        {/* sidebar */}
         <Sidebar
           profile={
             user
@@ -25,19 +24,21 @@ export default function Home() {
         />
         <div className="flex-1 p-6">
           <div className="page-wrapper">
-            {/* Page title */}
+            {/* page title */}
             <label className="page-title">Home Page</label>
             <hr className="border-gray-300 my-1" />
-            {/* Welcome message */}
+
+            {/* message */}
             <p className="text-gray-700 mb-10 mt-3">
               Welcome to the Leave System! Use the sidebar to navigate between the main features:
             </p>
-            {/* Feature list */}
+
             <ul className="list-disc pl-6 text-gray-700 space-y-3">
               <li>
                 <strong>My Leave:</strong> View your leave balance, request new leave, and see the status of your leave requests.
               </li>
-              {/* Only show for non-staff users */}
+
+              {/* only show for non-staff users */}
               {!isStaff && (
                 <li>
                   <strong>Manage Staff Leave Requests:</strong> (Managers/Admins) Review, approve, or reject leave requests submitted by staff.
