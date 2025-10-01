@@ -50,7 +50,7 @@ describe('<RightPanel />', () => {
     cy.contains('Delete').should('exist')
   })
 
-  it('shows save and cancel buttons when editing', () => {
+  it('shows Save and cancel buttons when editing', () => {
     cy.mount(
       <RightPanel
         open={true}

@@ -24,15 +24,13 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
     const today = new Date();
     const [month, setMonth] = useState<Date>(today);
 
-    // calculating number of selected days
+    // calculation for  number of selected days
     const daysSelected =
         startDate && endDate
             ? differenceInCalendarDays(endDate, startDate) + 1
             : 0;
 
-    // success/error messages state
     const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
-    // reporting lines state
     const [reportingLines, setReportingLines] = useState<any[]>([]);
 
     // approved leave date ranges
@@ -65,7 +63,6 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
     // leave request submission
     const handleRequestLeave = () => {
         if (startDate && endDate) {
-            // user's reporting line (manager)
             const myReportingLine = reportingLines.find(
                 (line) =>
                     line.user &&
@@ -82,7 +79,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
             // console.log("Found reporting line:", myReportingLine);
             // console.log("Manager ID to send:", managerId);
 
-            // create leave request
+            // creating leave request
             createLeaveRequest(startDate, endDate, String(token), userId, managerId)
                 .then(() => {
                     setMessage({ type: "success", text: 'Leave request created successfully!' });
@@ -97,7 +94,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
         }
     }
 
-    // disabled dates for selection (approved or pending)
+    // disabled dates for selection
     const disabledDates: Date[] = [];
     leaveRequests.forEach(req => {
         if (req.status === "Approved" || req.status === "Pending") {
@@ -148,7 +145,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
 
     return (
         <div className="flex flex-row min-h-[660px] shadow-sm border-gray-200 bg-zinc-50">
-            {/* Calendar Section */}
+            {/* calendar Section */}
             <div className="flex flex-col justify-top w-full bg-white-50">
                 <h2 className="text-xl font-semibold pl-4 pt-2">Select Leave Dates</h2>
                 <DayPicker
@@ -156,7 +153,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
                     selected={startDate && endDate ? { from: startDate, to: endDate } : undefined}
                     onSelect={(range) => {
                         if (range && range.from && range.to) {
-                            // Prevent selecting overlapping leave
+                            // prevent selection of overlapping leave
                             if (isRangeOverlapping(range.from, range.to, disabledDates)) {
                                 setMessage({ type: "error", text: "Selected range overlaps with existing leave (pending or approved)." });
                                 setStartDate(undefined);
@@ -205,7 +202,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
                     modifiersClassNames={modifiersClassNames}
                 />
             </div>
-            {/* Controls Section */}
+            {/* controls Section */}
             <div className="flex flex-col border-l border-gray-200 p-4 bg-gray-50 w-2/5">
                 {/* <h2 className="text-xl font-semibold">Leave Actions</h2> */}
                 <div className="flex flex-col h-full flex-1">
@@ -266,7 +263,7 @@ export default function DatePicker({ leaveRequests, leaveBalance, onLeaveRequest
                         </div>
                     </div>
                     {daysSelected > 0 && (
-                        // Bottom-aligned section
+                        // bottom section
                         <div className="mt-auto flex flex-col space-y-2 pt-4">
                             {startDate && endDate && (
                                 <div className="bg-white-50 mb-5">

@@ -22,7 +22,7 @@ describe('<ReportingForm />', () => {
           user_id: 2,
           manager_id: 3,
           startDate: '2024-01-01',
-          endDate: '2025-12-31' // <-- 2025 date here
+          endDate: '2025-12-31' 
         }}
       />
     )
@@ -47,8 +47,8 @@ describe('<ReportingForm />', () => {
         }}
       />
     )
-    cy.get('select').eq(0).select('2') // Select Bob
-    cy.get('select').eq(1).select('4') // Select Dan
+    cy.get('select').eq(0).select('2') 
+    cy.get('select').eq(1).select('4') 
     cy.get('input[type="date"]').eq(0).clear().type('2024-02-01')
     cy.get('input[type="date"]').eq(1).clear().type('2025-05-03')
     cy.get('form').submit().then(() => {

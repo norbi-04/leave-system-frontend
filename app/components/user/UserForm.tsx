@@ -5,13 +5,13 @@ import type { Department } from "~/types/DepartmentType";
 import styles from '~/styles/PanelForm.module.css';
 
 interface UserFormProps {
-    user: User; // The user object to edit
-    roles: Role[]; // List of available roles
-    departments: Department[]; // List of available departments
-    onSubmit: (data: Partial<User> & { password?: string }) => void; // Callback for form submission
+    user: User;
+    roles: Role[];
+    departments: Department[];
+    onSubmit: (data: Partial<User> & { password?: string }) => void;
 }
 
-// Expose imperative methods for parent components
+// export  methods for parent components
 export interface UserFormHandle {
     resetForm: () => void;
     submitForm: () => void;
@@ -21,15 +21,14 @@ type UserFormData = Partial<User> & { password?: string };
 
 const UserForm = forwardRef<UserFormHandle, UserFormProps>(
     ({ user, roles, departments, onSubmit }, ref) => {
-        // State to hold form data
         const [formData, setFormData] = useState<UserFormData>(user);
 
-        // Update form data if user prop changes
+        // update form data if user prop changes
         useEffect(() => {
             setFormData(user);
         }, [user]);
 
-        // Expose reset and submit methods to parent via ref
+        // expose reset and submit methods to parent via reference
         useImperativeHandle(ref, () => ({
             resetForm() {
                 setFormData(user);
@@ -46,7 +45,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     onSubmit(formData);
                 }}
             >
-                {/* First Name input */}
+                {/* first name */}
                 <label className={styles.label}>First Name</label>
                 <input
                     className="mb-5 input"
@@ -60,7 +59,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     }
                 />
 
-                {/* Last Name input */}
+                {/* last name */}
                 <label className={styles.label}>Last Name</label>
                 <input
                     className="mb-5 input"
@@ -74,7 +73,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     }
                 />
 
-                {/* Email input */}
+                {/* email */}
                 <label className={styles.label}>Email</label>
                 <input
                     required
@@ -89,7 +88,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     }
                 />
 
-                {/* Department selection */}
+                {/* department */}
                 <label className={styles.label}>Department</label>
                 <select
                     required
@@ -115,7 +114,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     ))}
                 </select>
 
-                {/* Role selection */}
+                {/* role */}
                 <label className={styles.label}>Role</label>
                 <select
                     required
@@ -141,7 +140,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     ))}
                 </select>
 
-                {/* Leave Balance input */}
+                {/* leave balance */}
                 <label className={styles.label}>Leave Balance</label>
                 <input
                     required
@@ -157,7 +156,7 @@ const UserForm = forwardRef<UserFormHandle, UserFormProps>(
                     }
                 />
 
-                {/* Password input (for new password) */}
+                {/* new password */}
                 <label className={styles.label}>New Password</label>
                 <input
                     className="mb-5 input-password"
