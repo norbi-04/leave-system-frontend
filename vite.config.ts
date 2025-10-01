@@ -1,21 +1,30 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { reactRouter } from "@react-router/dev/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
-  plugins: [
+const isCypress = process.env.CYPRESS === "true";
+
+export default defineConfig(async () => {
+  const plugins = [
     react(),
-    reactRouter(),
     tsconfigPaths(),
-  ],
-  server: {
-    hmr: false,
-    fs: {
-      allow: [
-        ".",
-        "cypress",
-      ],
+  ];
+
+  if (!isCypress) {
+    const { reactRouter } = await import("@react-router/dev/vite");
+    plugins.push(reactRouter());
+  }
+
+  return {
+    plugins,
+    server: {
+      hmr: false,
+      fs: {
+        allow: [
+          ".",
+          "cypress",
+        ],
+      },
     },
-  },
+  };
 });
